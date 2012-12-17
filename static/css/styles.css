@@ -1,0 +1,227 @@
+/* Add additional stylesheets below
+-------------------------------------------------- */
+/*
+  Bootstrap's documentation styles
+  Special styles for presenting Bootstrap's documentation and examples
+*/
+
+
+
+/* Body and structure
+-------------------------------------------------- */
+
+html {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    background-image: url('../img/gray_jean.png');}
+
+ul {
+    list-style: none;
+}
+
+/* Code in headings */
+h3 code {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.page-header{
+    margin: 40px 0 40px 0;
+}
+
+.main-grid-span{
+    margin-top: -60px;
+}
+
+.full-page-container{
+    width:auto;
+}
+
+.blackback {
+    margin-top: 90px;
+    background: rgba(0,0,0,0.85);
+    border-radius: 25px;
+}
+
+#main-content{
+    margin-top: 40px;
+}
+
+.throbber {
+    background-image: url('../img/throbber.gif');
+    background-size: 16px 16px;
+    height:16px;
+    width:16px;
+    position: relative;
+    bottom:32px;
+    left:0px;
+    display:none;
+}
+/* Tweak navbar brand link to be super sleek
+-------------------------------------------------- */
+
+body > .navbar {
+    font-size: 13px;
+}
+
+/* Change the docs' brand */
+body > .navbar .brand {
+    padding-right: 0;
+    padding-left: 0;
+    margin-left: 20px;
+    float: right;
+    font-weight: bold;
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+}
+body > .navbar .brand:hover {
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
+}
+
+/* Base class
+------------------------- */
+.home {
+    background: url('https://kippt.com/static/img/home-bg-lib.jpg?62cc53229b01') center 0px no-repeat, url('https://kippt.com/static/img/home-bg-black.png?62cc53229b01') left 0px repeat-x;
+    padding-top: 0px; }
+.home article.container {
+    margin-top: 0px; }
+.home .hero-unit {
+    background: none;
+    height: 324px;
+    padding: 55px 620px 0 0;
+    margin-right: -80px;
+    margin-bottom: 0; }
+.home .hero-unit h1 {
+    font-size: 52px;
+    line-height: 1.1;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 90px;
+    text-shadow: 0 0 10px 40px #000; }
+.home .hero-unit h1 small {
+    font-weight: normal;
+    color: #fff;
+    display: block;
+    font-size: 22px; }
+.home .hero-unit p {
+    margin: 1em 0;
+    font-size: 20px; }
+.home .hero-unit .btn {
+    font-size: 24px;
+    padding: 12px 32px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    margin-top: 15px;
+    background: #5bb900;
+    box-shadow: none;
+    border: 0; }
+.home .hero-unit .btn:hover {
+    background: #50a300; }
+
+/* Marketing section of Overview
+-------------------------------------------------- */
+
+.marketing {
+    text-align: center;
+    color: #5a5a5a;
+}
+.marketing h1 {
+    margin: 60px 0 10px;
+    font-size: 60px;
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+.marketing h2 {
+    font-weight: 200;
+    margin-bottom: 5px;
+}
+.marketing p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.marketing .marketing-byline {
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 25px;
+    color: #999;
+}
+.marketing img {
+    display: block;
+    margin: 0 auto 30px;
+}
+
+/* Footer
+-------------------------------------------------- */
+
+.footer {
+    padding: 40px 0;
+    color: #aaaaaa;
+    margin-top: 70px;
+    border-top: 1px solid #e5e5e5;
+    background-image: url('../img/navy_blue.png');
+    /*background-color: ;*/
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+}
+.footer p {
+    margin-bottom: 0;
+    color: #777;
+}
+.footer-links {
+    margin: 10px 0;
+}
+.footer-links li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.footer a {
+    color: #aaaaaa;
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.footer a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.well {
+    background-color: #f9f9f9;
+}
+
+.navbar-inverse {
+    background-image: url('../img/navy_blue.png');
+}
+
+/* Forms */
+.required-indicator {
+    color: #FF0000;
+    padding-left: 2px;
+}
+
+.form-horizontal .controls {
+    margin-left: 110px;
+}
+
+.form-horizontal .control-label {
+    width: 100px;
+}
+
+/*Datatable*/
+.datatable-pagination {
+    float: right;
+}
+.datatable-head {
+    height: 36px;
+}

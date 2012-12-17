@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row" style="margin-top:80px;">
+        <div class="span4 offset4">
+            <div class="well">
+                <div class="page-header" style="margin-top: -5px;">
+                    <h3>Login</h3>
+                </div>
+                <div class="alert alert-danger" id="message_box" style="display: none">
+
+                </div>
+                <form class="form-horizontal" method="post" action="" id="login_form">
+                    <div class="control-group">
+                        <label class="control-label">Email</label>
+                        <div class="controls">
+                            {{ form.email|safe }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Password</label>
+                        <div class="controls">
+                            {{ form.password|safe }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label class="checkbox">
+                                {{ form.remember_me|safe }} Remember Me
+                            </label>
+                            <div style="margin-top: 20px;">
+                                <button type="button" class="btn btn-primary" id="login_form_submit">Login</button> or <a href="/auth/register"> register an account.</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+{#                <div style="text-align: center; margin-bottom: 20px; font-size: 22px;">Or</div>#}
+                <hr>
+                <a class="btn btn-primary btn-block" href="{{ url_for('facebook_login') }}">Login with Facebook</a>
+                <a class="btn btn-primary btn-block" href="{{ url_for('google_login') }}">Login with Google</a>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Ajax request for login
+        function login() {
+            $.post("/auth/login/", $("#login_form").serialize(),
+                    function(responseText)
+                    {
+                        var data = $.parseJSON(responseText);
+                        if (data.loggedin) {
+                            window.location.replace("/tournament/list");
+                        }
+
+                        if (data.error_message) {
+                            $('#message_box').html(data.error_message)
+                            $('#message_box').show()
+                        }
+
+                    });
+        }
+
+        $("#login_form").keypress(function(e) {
+            if (e && e.which == 13) {
+                login();
+            }
+        })
+
+        $("#login_form_submit").click(function() {
+            login();
+        })
+
+
+    </script>
+
+{% endblock %}

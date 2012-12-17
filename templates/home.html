@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block jumbotron %}
+
+    <div class="home {%if login_mode=='dusty'%}dusty{%endif%} shadow">
+        <div class="container">
+            <div class="row">
+                <div class="span12 blackback">
+                    <h1>Parcel Patrol</h1>
+                    <h3> All your packages.  In one place. </h3>
+
+                    <p style="text-align: center;"><a href="" class="btn btn-primary btn-large">Track a Package</a></p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="marketing">
+        <div class="row-fluid" style="margin-top: 60px;">
+            <div class="span4">
+                <div style="font-size: 180px; text-align: center; line-height: 0.9;">
+                    <i class="icon-flag"></i>
+                </div>
+
+                <h2>Easy to use</h2>
+                <p>#TODO</p>
+            </div>
+            <div class="span4">
+                <div style="font-size: 180px; text-align: center; line-height: 0.9;">
+                    <i class="icon-group"></i>
+                </div>
+
+                <h2>Made for sharing</h2>
+                <p>
+                    #TODO
+                </p>
+            </div>
+            <div class="span4">
+                <div style="font-size: 180px; text-align: center; line-height: 0.9;">
+                    <i class="icon-cogs"></i>
+                </div>
+
+                <h2>Easily Customizable</h2>
+                <p>#TODO</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
