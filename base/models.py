@@ -1,5 +1,4 @@
 from google.appengine.ext import db
-from auth import models as auth_models
 
 
 class ModelMixin(object):
@@ -21,4 +20,3 @@ class ModelMixin(object):
 class Timestamped(ModelMixin):
     create_date = db.DateTimeProperty(auto_now_add=True, indexed=True)
     modified_date = db.DateTimeProperty(auto_now=True, indexed=False)
-    creator = db.ReferenceProperty(auth_models.WTUser)
