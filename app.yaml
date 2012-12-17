@@ -1,0 +1,28 @@
+application: parcelpatrol
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: no
+
+handlers:
+- url: /(.*)\.(ico|png|txt)
+  static_files: \1.\2
+  upload: (.*)\.(ico|png|txt)
+
+- url: /static
+  static_dir: static
+  secure: always
+
+- url: /.*
+  script: main.py
+  secure: always
+
+libraries:
+- name: jinja2
+  version: "2.6"
+
+builtins:
+- deferred: on
+
+inbound_services:
+  - warmup

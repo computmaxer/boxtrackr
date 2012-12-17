@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row" style="margin-top:80px;">
+        <div class="span4 offset4">
+            <div class="well">
+
+                <div class="page-header" style="margin-top: -5px;">
+                    <h3>Register</h3>
+                </div>
+
+                <form class="form-horizontal" method="post" action="" id="basic_login_form">
+                    <div class="control-group">
+                        <label class="control-label">Email</label>
+                        <div class="controls">
+                            {{ form.email|safe }}
+                        </div>
+                    </div>
+                    <div class="control-group" id="username_control">
+                        <label class="control-label">Username</label>
+                        <div class="controls">
+                            {{ form.username|safe }}
+                            <i class="icon-ok" id="username-confirm" style="position: relative; right: -200px; top: -25px; color: #209920"></i>
+                        </div>
+                    </div>
+                    <div class="control-group" id="password_control" style="margin-top: -25px;">
+                        <label class="control-label">Password</label>
+                        <div class="controls">
+                            {{ form.password|safe }}
+                        </div>
+                    </div>
+                    <div class="control-group" id="password_confirm_control">
+                        <label class="control-label">Confirm</label>
+                        <div class="controls">
+                            {{ form.password_confirm|safe }}
+                            <i class="icon-ok" id="password-confirm" style="position: relative; right: -200px; top: -25px; color: #209920"></i>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="button" class="btn btn-primary" id="submit">Register</button>
+                        </div>
+                    </div>
+                </form>
+
+                <hr>
+                <a class="btn btn-primary btn-block" href="{{ url_for('facebook_login') }}">Login with Facebook</a>
+                <a class="btn btn-primary btn-block" href="{{ url_for('google_login') }}">Login with Google</a>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+    $(document).ready(function(){
+        $('#username-confirm').css('color', '#ffffff');
+        $('#basic_login_form').find('input').css("padding-right", "25px")
+        $('#basic_login_form').find('input').css("width", "187px")
+        $("#password-confirm").css('color', '#ffffff');
+
+
+        $("#username").blur(function () {
+            $('#username-confirm').css('color', '#ffffff');
+            $("#username_text").text("");
+            if ($("#username").val().length > 0) {
+                var page = "/auth/check_username?";
+                var output;
+                $.getJSON(page,
+                    {
+                      username: $("#username").val()
+                    },
+                    function(data) {
+
+                        if (data.valid) {
+                            $('#username-confirm').css('color', '#209920');
+                            $("#username_control").removeClass("error").addClass("success");
+                            $("#username_text").text("Available");
+
+                        } else {
+                            $('#username-confirm').css('color', '#ffffff');
+                            $("#username_control").removeClass("success").addClass("error");
+                            $("#username_text").text("Unavailable");
+                        }
+                    })
+            }
+        })
+
+        $("#password_confirm").blur(function() {
+            if ($("#password").val() == $("#password_confirm").val()) {
+                $("#password-confirm").css('color', '#209920');
+                $("#password_confirm_control").removeClass("error").addClass("success");
+                $("#password_confirm_text").text("Passwords match!");
+            } else {
+                $("#password-confirm").css('color', '#ffffff');
+                $("#password_confirm_control").removeClass("success").addClass("error");
+                $("#password_confirm_text").text("Passwords don't match!");
+            }
+        });
+
+
+
+        $("#submit").click(function() {
+            $.post("/auth/register/", {email: $("#email").val(), username: $("#username").val(), password: $("#password").val(), password_confirm: $("#password_confirm").val()},
+            function(responseText)
+            {
+                var data = $.parseJSON(responseText);
+
+                if (data.registered) {
+                    window.location.replace("/auth/welcome/");
+                } else {
+                    if (data.error_message) {
+                        $("#error_message").html(data.error_message);
+                        $("#error_message").show();
+                    }
+                }
+
+            });
+        });
+    });
+
+
+    </script>
+
+{% endblock %}
