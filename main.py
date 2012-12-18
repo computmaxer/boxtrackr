@@ -14,6 +14,8 @@ from auth import urls as auth_urls
 from base import urls as base_urls
 from base.templatetags import ttags
 
+from shipping import urls as shipping_urls
+
 
 app = Flask(__name__)
 
@@ -25,6 +27,7 @@ app.secret_key = 'this-is-just-our-dev-key-oh-so-secret'
 #Define URLs
 base_urls.setup_urls(app)
 auth_urls.setup_urls(app)
+shipping_urls.setup_urls(app)
 
 #Setup other things
 ttags.setup_jinja2_environment(app)
