@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>{% block title %}319 Project{% endblock %}</title>
+        <title>{% block title %}BrownBox{% endblock %}</title>
 
         <link rel="author" href="/humans.txt" />
 
@@ -14,10 +14,11 @@
         {% else %}
         <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
         <link rel="stylesheet" href="/static/css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/chosen.css" />
-        <link rel="stylesheet" type="text/css" href="/static/css/datepicker.css" />
-        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.datatables.css" />
+{#        <link rel="stylesheet" type="text/css" href="/static/css/chosen.css" />#}
+{#        <link rel="stylesheet" type="text/css" href="/static/css/datepicker.css" />#}
+{#        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.datatables.css" />#}
         <link rel="stylesheet" type="text/css" href="/static/css/styles.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/fonts.css" />
 
         <script type="text/javascript" src="/static/js/jquery-1.8.3.js"></script>
         <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
@@ -36,154 +37,126 @@
 
     <body>
 
-        <div class="navbar navbar-fixed-top navbar-inverse">
-            <div class="navbar-inner">
-                <div class="container">
-
-                    <ul class="nav">
-                        <li {% if active_nav == 'home' %}class="active"{% endif %}><a href="/">Home</a></li>
-                        {% if user %}
-                        <li {% if active_nav == 'my_tournaments' %}class="active"{% endif %}><a href="">My Tournaments</a></li>
-                        {% endif %}
-                    </ul>
-
-                    {% if not user %}
-                        <div class="dropdown pull-right">
-                            <a class="btn btn-primary" href="{{ url_for('register') }}">Register</a>
-                            <a id="login_dropdown" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" href="#">Login</a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="padding: 15px; padding-bottom: 0px;">
-                                <form accept-charset="UTF-8" id="nav_login">
-                                    <div id="login_message" class="alert alert-danger" style="display: none"></div>
-                                    <input style="margin-bottom: 15px;" type="text" placeholder="Email" id="dropdown_email" name="email">
-                                    <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="dropdown_password" name="password">
-                                    <input style="float: left; margin-right: 10px;" type="checkbox" name="remember_me" id="remember_me" value="1">
-                                    <label class="string optional" for="remember_me"> Remember me</label>
-                                    <input class="btn btn-primary btn-block" type="button" id="sign-in" value="Sign In">
-                                    <label style="text-align: center;padding-top:5px">or</label>
-                                    <input class="btn btn-primary btn-block" type="button" id="sign-in-facebook" value="Sign In with Facebook">
-                                    <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
-{#                                    <input class="btn btn-primary btn-block" type="button" value="Sign Up" onclick="window.location.replace('{{ url_for('register') }}')">#}
-{#                                    <input class="btn btn-primary btn-block" type="button" value="Reset Password">#}
-                                </form>
-                            </ul>
-                        </div>
-
-                    {% else %}
-
-                        <ul class="nav pull-right">
+    <header id='masthead'>
+        <nav class='navbar navbar-fixed-top'>
+            <div class='navbar-inner'>
+                <div class='container'>
+                    <a class='btn btn-navbar' data-target='.nav-collapse' data-toggle='collapse'>
+                        <span class='icon-bar'></span>
+                        <span class='icon-bar'></span>
+                        <span class='icon-bar'></span>
+                    </a>
+                    <h1 class='brand'>
+                        <a href='{{ url_for('home') }}'>
+                            Brownbox
+                            <i class='icon-envelope'></i>
+                        </a>
+                    </h1>
+                    <div class='nav-collapse'>
+                        <ul class='nav pull-right'>
+                            <li class='active'><a href="{{ url_for('home') }}">Home</a></li>
+                            <li class=''><a href="{{ url_for('register') }}">Register</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    {{ user.get_display_name() }}
-                                    <b class="caret"></b>
-                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login</a>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ url_for('tournament-list') }}">Tournaments</a>
-                                    </li>
-{#                                    <li>#}
-{#                                        <a href="#">Profile</a>#}
-{#                                    </li>#}
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="{{ url_for('logout') }}">Logout</a>
-                                    </li>
+                                    <form accept-charset="UTF-8" id="nav_login">
+                                        <div id="login_message" class="alert alert-danger" style="display: none"></div>
+                                        <input style="margin-bottom: 15px;" type="text" placeholder="Email" id="dropdown_email" name="email">
+                                        <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="dropdown_password" name="password">
+                                        <input style="float: left; margin-right: 10px;" type="checkbox" name="remember_me" id="remember_me" value="1">
+                                        <label class="string optional" for="remember_me"> Remember me</label>
+                                        <input class="btn btn-info btn-block" type="button" id="sign-in" value="Sign In">
+                                        <label style="text-align: center;padding-top:5px">or</label>
+                                        <input class="btn btn-info btn-block" type="button" id="sign-in-facebook" value="Sign In with Facebook">
+                                        <input class="btn btn-info btn-block" type="button" id="sign-in-google" value="Sign In with Google">
+                                    </form>
                                 </ul>
                             </li>
                         </ul>
-
-                    {% endif %}
-
-                </div>
-            </div>
-        </div>
-
-        {% block jumbotron %}{% endblock %}
-
-        <div id="main-content" class="{% if full_page_content %}container-fluid full-page-container{% else %}container{% endif %}">
-            {% if not remove_header %}
-                <div class="{% if full_page_content %}row-fluid{% else %}row{% endif %}">
-                    <div class="span12">
-                        <div class="page-header" {% if full_page_content %}style="margin-left: 100px"{% endif %}>
-                            <h1>{% block header %}{% endblock %}</h1>
-                        </div>
                     </div>
                 </div>
-            {% endif %}
-            {% block content %}{% endblock %}
-        </div>
-
-        <footer class="footer">
-            <div class="container">
-               &copy 2012 - WebTournaments
-                <span class="pull-right"><a href="">About Us</a> <a href="">Contact Us</a> <a href="#">Terms of Service</a> <a href="#">Privacy Policy</a></span>
             </div>
-        </footer>
+        </nav>
+    </header>
 
-        <script>
-            $(document).ready(function(){
-                //This code places the footer at the bottom of the page, even if there is not enough
-                //content on the page to push it down there.  It sets the min-height on the
-                //main-content div.  This gets automatically recalculated whenever the window is resized.
-                $(window).resize(function(){
-                    var new_height = $(window).height() - 191 - $('.footer').height();
-                    //The 'jumbotron' is not in main-content so we have to account for that separately.
-                    if($(".home").length > 0){
-                        new_height = new_height - $('.home').height() - 150; //150 is for top and bottom padding.
-                    }
-                    if(new_height < 300) new_height = 300;
-                    $("#main-content").css('min-height', new_height);
-                });
-                //Sets the min-height on initial page load.
-                $(window).trigger('resize');
+    <div id="main-content" class="{% if full_page_content %}container-fluid full-page-container{% else %}container{% endif %}">
+        {% if not remove_header %}
+            <div class="{% if full_page_content %}row-fluid{% else %}row{% endif %}">
+                <div class="span12">
+                    <div class="page-header" {% if full_page_content %}style="margin-left: 100px"{% endif %}>
+                        <h1>{% block header %}{% endblock %}</h1>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
 
-                // Ajax request for login
-                function login() {
-                    $.post("/auth/login/", $("#nav_login").serialize(),
-                            function(responseText)
-                            {
-                                var data = $.parseJSON(responseText);
-                                if (data.loggedin) {
-                                    window.location.reload();
-                                }
 
-                                // Showing errors in the login dropdown
-                                if (data.error_message) {
-                                    var message_div = $("#login_message")
-                                    message_div.html(data.error_message);
-                                    message_div.show()
-                                }
-
-                            });
-                }
-
-                // Calling the login function when the "Sign in" button is clicked
-                $("#sign-in").click(function() {
-                    login();
-                });
-
-                // Calling the login function when enter is pressed
-                $("#nav_login").keypress(function(e) {
-                    if (e && e.which == 13) {
-                        login();
-                    }
-                });
-
-                // Setting focus on the email field when the dropdown is opened
-                $("#login_dropdown").click(function () {
-                    setTimeout('$("#dropdown_email").focus()', 200);
-                });
-
-                $("#sign-in-facebook").click(function() {
-                    window.location.replace("/auth/facebook_login")
-                })
-
-                $("#sign-in-google").click(function() {
-                    window.location.replace("/auth/google_login ")
-                })
-
-            });
-        </script>
-
-        <script type="text/javascript">if (window.location.hash == '#_=_')window.location = '';</script>
     </body>
+
+    <script>
+        $(document).ready(function(){
+            //This code places the footer at the bottom of the page, even if there is not enough
+            //content on the page to push it down there.  It sets the min-height on the
+            //main-content div.  This gets automatically recalculated whenever the window is resized.
+            $(window).resize(function(){
+                var new_height = $(window).height() - 142 - $('#footer').height();
+                //The 'jumbotron' is not in main-content so we have to account for that separately.
+                if($(".home").length > 0){
+                    new_height = new_height - $('.home').height() - 150; //150 is for top and bottom padding.
+                }
+                if(new_height < 300) new_height = 300;
+                $("#main-content").css('min-height', new_height);
+            });
+            //Sets the min-height on initial page load.
+            $(window).trigger('resize');
+
+            // Ajax request for login
+            function login() {
+                $.post("/auth/login/", $("#nav_login").serialize(),
+                        function(responseText)
+                        {
+                            var data = $.parseJSON(responseText);
+                            if (data.loggedin) {
+                                window.location.reload();
+                            }
+
+                            // Showing errors in the login dropdown
+                            if (data.error_message) {
+                                var message_div = $("#login_message")
+                                message_div.html(data.error_message);
+                                message_div.show()
+                            }
+
+                        });
+            }
+
+            // Calling the login function when the "Sign in" button is clicked
+            $("#sign-in").click(function() {
+                login();
+            });
+
+            // Calling the login function when enter is pressed
+            $("#nav_login").keypress(function(e) {
+                if (e && e.which == 13) {
+                    login();
+                }
+            });
+
+            // Setting focus on the email field when the dropdown is opened
+            $("#login_dropdown").click(function () {
+                setTimeout('$("#dropdown_email").focus()', 200);
+            });
+
+            $("#sign-in-facebook").click(function() {
+                window.location.replace("/auth/facebook_login")
+            })
+
+            $("#sign-in-google").click(function() {
+                window.location.replace("/auth/google_login ")
+            })
+
+        });
+    </script>
 </html>
