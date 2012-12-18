@@ -43,7 +43,7 @@
                     <ul class="nav">
                         <li {% if active_nav == 'home' %}class="active"{% endif %}><a href="/">Home</a></li>
                         {% if user %}
-                        <li {% if active_nav == 'my_tournaments' %}class="active"{% endif %}><a href="">My Tournaments</a></li>
+                        <li {% if active_nav == 'my_packages' %}class="active"{% endif %}><a href="{{ url_for('package-list') }}">My Packages</a></li>
                         {% endif %}
                     </ul>
 

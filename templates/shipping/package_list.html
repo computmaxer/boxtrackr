@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}My Packages{% endblock %}
+
+{% block header %}My Packages{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Tracking #</th>
+                        <th>Purchase Site</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+{#                {% for thing in things %}#}
+{#                    #TODO: Customize table. Make it look less like bootstrapy same-ness#}
+                    <tr>
+                        <td><i class="icon-caret-right" style="color:#7A7A7A;"></i></td>
+                        <td>Test</td>
+                        <td>Test</td>
+                        <td>Test</td>
+                        <td>Test</td>
+                    </tr>
+{#                {% endfor %}#}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}
