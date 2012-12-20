@@ -9,6 +9,12 @@ import logging
 
 
 def query_ups_tracking(tracking_number):
+    """
+    Check shipment status with a UPS tracking number.  Queries the UPS API for the results in XML,
+    and then parses the XML to return the shipment information.
+    :param tracking_number: The UPS tracking number of the shipment being tracked.
+    :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
+    """
     response = _get_ups_tracking_xml(tracking_number)
     tree = ET.XML(response)
 
