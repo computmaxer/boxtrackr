@@ -1,5 +1,4 @@
 *.py[co]
-settingslocal.py
 
 # Packages
 *.egg
@@ -30,3 +29,5 @@ pip-log.txt
 # PyCharm
 .idea
 .idea/*
+
+settingslocal.py
