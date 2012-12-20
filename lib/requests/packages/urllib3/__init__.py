@@ -19,7 +19,8 @@ from .connectionpool import (
     connection_from_url
 )
 
-from . import exceptions
+#from . import exceptions
+import exceptions # MAX PATCH
 from .filepost import encode_multipart_formdata
 from .poolmanager import PoolManager, ProxyManager, proxy_from_url
 from .response import HTTPResponse

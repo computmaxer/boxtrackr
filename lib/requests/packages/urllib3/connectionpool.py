@@ -82,9 +82,10 @@ class VerifiedHTTPSConnection(HTTPSConnection):
     def set_cert(self, key_file=None, cert_file=None,
                  cert_reqs='CERT_NONE', ca_certs=None):
         ssl_req_scheme = {
-            'CERT_NONE': ssl.CERT_NONE,
-            'CERT_OPTIONAL': ssl.CERT_OPTIONAL,
-            'CERT_REQUIRED': ssl.CERT_REQUIRED
+            #MAX PATCH
+            'CERT_NONE': 0, #ssl.CERT_NONE,
+            'CERT_OPTIONAL': 1, #ssl.CERT_OPTIONAL,
+            'CERT_REQUIRED': 2, #ssl.CERT_REQUIRED
         }
 
         self.key_file = key_file
@@ -549,7 +550,7 @@ class HTTPSConnectionPool(HTTPConnectionPool):
                             cert_reqs=self.cert_reqs, ca_certs=self.ca_certs)
 
         if self.ssl_version is None:
-            connection.ssl_version = ssl.PROTOCOL_SSLv23
+            connection.ssl_version = 2 #ssl.PROTOCOL_SSLv23 #MAX PATCH
         else:
             connection.ssl_version = self.ssl_version
 
