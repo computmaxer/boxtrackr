@@ -11,6 +11,8 @@ CSRF_SESSION_LKEY = 'dev_key_h8asSNJ9s9=+'
 
 MEDIA_MERGED = True
 
+UPS_API_PASSWORD = 'password'
+
 try:
     from settingslocal import *
 except ImportError:
