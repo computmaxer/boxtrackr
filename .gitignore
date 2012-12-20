@@ -29,3 +29,5 @@ pip-log.txt
 # PyCharm
 .idea
 .idea/*
+
+settingslocal.py
