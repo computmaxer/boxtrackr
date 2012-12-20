@@ -22,7 +22,7 @@ try:  # Test for SSL features
     SSLContext = None
     HAS_SNI = False
 
-    from ssl import wrap_socket, CERT_NONE, SSLError, PROTOCOL_SSLv23
+    from ssl import wrap_socket, SSLError #CERT_NONE, PROTOCOL_SSLv23 #MAX PATCH
     from ssl import SSLContext  # Modern SSL?
     from ssl import HAS_SNI  # Has SNI?
 except ImportError:
@@ -31,6 +31,10 @@ except ImportError:
 
 from .packages import six
 from .exceptions import LocationParseError
+
+#MAX PATCH
+CERT_NONE = 0
+PROTOCOL_SSLv23 = 2
 
 
 class Url(namedtuple('Url', ['scheme', 'auth', 'host', 'port', 'path', 'query', 'fragment'])):
