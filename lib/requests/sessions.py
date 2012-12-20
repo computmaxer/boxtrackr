@@ -365,7 +365,12 @@ class Session(SessionRedirectMixin):
                 return adapter
 
         # Nothing matches :-/
-        raise InvalidSchema('No connection adapters were found for \'%s\'' % url)
+        raise InvalidSchema("No connection adapters were found for '%s'" % url)
+
+    def close(self):
+        """Closes all adapters and as such the session"""
+        for _, v in self.adapters.items():
+            v.close()
 
     def mount(self, prefix, adapter):
         """Registers a connection adapter to a prefix."""
@@ -379,7 +384,7 @@ class Session(SessionRedirectMixin):
             setattr(self, attr, value)
 
 
-def session(**kwargs):
+def session():
     """Returns a :class:`Session` for context-management."""
 
-    return Session(**kwargs)
+    return Session()
