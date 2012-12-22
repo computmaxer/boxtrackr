@@ -73,32 +73,7 @@
     -o-border-radius: 50%;
     border-radius: 50%;
 }
-#style-switcher .theme-colors .color-green {
-    background-color: #779922;
-    -webkit-box-shadow: 0px 2px 4px #576f19 inset;
-    -moz-box-shadow: 0px 2px 4px #576f19 inset;
-    box-shadow: 0px 2px 4px #576f19 inset;
-}
-#style-switcher .theme-colors .color-green:hover {
-    background-color: #6d8c1f;
-    background-image: none;
-    -webkit-box-shadow: 0px 3px 6px #36460f inset;
-    -moz-box-shadow: 0px 3px 6px #36460f inset;
-    box-shadow: 0px 3px 6px #36460f inset;
-}
-#style-switcher .theme-colors .color-red {
-    background-color: #e8481d;
-    -webkit-box-shadow: 0px 2px 4px #bf3813 inset;
-    -moz-box-shadow: 0px 2px 4px #bf3813 inset;
-    box-shadow: 0px 2px 4px #bf3813 inset;
-}
-#style-switcher .theme-colors .color-red:hover {
-    background-color: #df4117;
-    background-image: none;
-    -webkit-box-shadow: 0px 3px 6px #902a0f inset;
-    -moz-box-shadow: 0px 3px 6px #902a0f inset;
-    box-shadow: 0px 3px 6px #902a0f inset;
-}
+
 #style-switcher .theme-colors .color-blue {
     background-color: #41b7d8;
     -webkit-box-shadow: 0px 2px 4px #279ebf inset;
@@ -129,66 +104,6 @@
     -webkit-box-shadow: 0px 1px 6px rgba(85, 85, 85, 0.7) inset;
     -moz-box-shadow: 0px 1px 6px rgba(85, 85, 85, 0.7) inset;
     box-shadow: 0px 1px 6px rgba(85, 85, 85, 0.7) inset;
-}
-#style-switcher .theme-patterns .pattern-lightmesh {
-    background-image: url(../images/patterns_samples/lghtmesh.png);
-}
-#style-switcher .theme-patterns .pattern-bedge-grunge {
-    background-image: url(../images/patterns_samples/bedge_grunge.png);
-}
-#style-switcher .theme-patterns .pattern-grid {
-    background-image: url(../images/patterns_samples/grid.png);
-}
-#style-switcher .theme-patterns .pattern-noisy-grid {
-    background-image: url(../images/patterns_samples/noisy_grid.png);
-}
-#style-switcher .theme-patterns .pattern-subtle-grey {
-    background-image: url(../images/patterns_samples/grey.png);
-}
-#style-switcher .theme-patterns .pattern-retina-wood {
-    background-image: url(../images/patterns_samples/retina_wood.png);
-}
-#style-switcher .theme-patterns .pattern-noise-lines {
-    background-image: url(../images/patterns_samples/noise_lines.png);
-}
-#style-switcher .theme-patterns .pattern-tiny-grid {
-    background-image: url(../images/patterns_samples/tiny_grid.png);
-}
-#style-switcher .theme-patterns .pattern-clean-paper {
-    background-image: url(../images/patterns_samples/extra_clean_paper.png);
-}
-#style-switcher .theme-patterns .pattern-farmer {
-    background-image: url(../images/patterns_samples/farmer.png);
-}
-#style-switcher .theme-patterns .pattern-project-papper {
-    background-image: url(../images/patterns_samples/project_papper.png);
-}
-#style-switcher .theme-patterns .pattern-concrete-wall {
-    background-image: url(../images/patterns_samples/concrete_wall_2.png);
-}
-#style-switcher .theme-patterns .pattern-wavecut {
-    background-image: url(../images/patterns_samples/wavecut.png);
-}
-#style-switcher .theme-patterns .pattern-little-pluses {
-    background-image: url(../images/patterns_samples/little_pluses.png);
-}
-#style-switcher .theme-patterns .pattern-light-honeycomp {
-    background-image: url(../images/patterns_samples/light_honeycomb.png);
-}
-#style-switcher .theme-patterns .pattern-old-mathematics {
-    background-image: url(../images/patterns_samples/old_mathematics.png);
-}
-#style-switcher .theme-patterns .pattern-45-degree-fabric {
-    background-image: url(../images/patterns_samples/45degreee_fabric.png);
-}
-#style-switcher .theme-patterns .pattern-strange-bullseyes {
-    background-image: url(../images/patterns_samples/strange_bullseyes.png);
-}
-#style-switcher .theme-patterns .pattern-diamond-upholstery {
-    background-image: url(../images/patterns_samples/diamond_upholstery.png);
-}
-#style-switcher .theme-patterns .pattern-subtle-stripes {
-    background-image: url(../images/patterns_samples/subtle_stripes.png);
 }
 
 /* GENERAL MARKUP RULES */
@@ -936,9 +851,6 @@ figure {
     color: #41b7d8;
 }
 
-.theme-color-green .carousel-control:hover {
-    color: #779922;
-}
 
 /* MAP AREA */
 /* -------- */
@@ -974,289 +886,8 @@ figure {
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.25) inset;
 }
 
-/* THEME PATTERNS */
-/* -------------- */
-.theme-pattern-lightmesh .section.alt {
-    background-image: url(../images/patterns/lghtmesh.png);
-    background-size: 256px 256px;
-}
 
-.theme-pattern-bedge-grunge .section.alt {
-    background-image: url(../images/patterns/bedge_grunge.png);
-    background-size: 588px  375px;
-}
 
-.theme-pattern-grid .section.alt {
-    background-image: url(../images/patterns/grid.png);
-    background-size: 310px  310px;
-}
-
-.theme-pattern-noisy-grid .section.alt {
-    background-image: url(../images/patterns/noisy_grid.png);
-    background-size: 150px  150px;
-}
-
-.theme-pattern-subtle-grey .section.alt {
-    background-image: url(../images/patterns/grey.png);
-    background-size: 397px  322px;
-}
-
-.theme-pattern-retina-wood .section.alt {
-    background-image: url(../images/patterns/retina_wood.png);
-    background-size: 512px 512px;
-}
-
-.theme-pattern-noise-lines .section.alt {
-    background-image: url(../images/patterns/noise_lines.png);
-    background-size: 60px 59px;
-}
-
-.theme-pattern-tiny-grid .section.alt {
-    background-image: url(../images/patterns/tiny_grid.png);
-    background-size: 26px 26px;
-}
-
-.theme-pattern-clean-paper .section.alt {
-    background-image: url(../images/patterns/extra_clean_paper.png);
-    background-size: 512px 512px;
-}
-
-.theme-pattern-farmer .section.alt {
-    background-image: url(../images/patterns/farmer.png);
-    background-size: 349px 349px;
-}
-
-.theme-pattern-project-papper .section.alt {
-    background-image: url(../images/patterns/project_papper.png);
-    background-size: 105px 105px;
-}
-
-.theme-pattern-concrete-wall .section.alt {
-    background-image: url(../images/patterns/concrete_wall_2.png);
-    background-size: 597px 545px;
-}
-
-.theme-pattern-wavecut .section.alt {
-    background-image: url(../images/patterns/wavecut.png);
-    background-size: 162px 15px;
-}
-
-.theme-pattern-little-pluses .section.alt {
-    background-image: url(../images/patterns/little_pluses.png);
-    background-size: 300px 300px;
-}
-
-.theme-pattern-light-honeycomp .section.alt {
-    background-image: url(../images/patterns/light_honeycomb.png);
-    background-size: 270px 289px;
-}
-
-.theme-pattern-old-mathematics .section.alt {
-    background-image: url(../images/patterns/old_mathematics.png);
-    background-size: 200px 200px;
-}
-
-.theme-pattern-45-degree-fabric .section.alt {
-    background-image: url(../images/patterns/45degreee_fabric.png);
-    background-size: 315px 315px;
-}
-
-.theme-pattern-strange-bullseyes .section.alt {
-    background-image: url(../images/patterns/strange_bullseyes.png);
-    background-size: 300px 300px;
-}
-
-.theme-pattern-diamond-upholstery .section.alt {
-    background-image: url(../images/patterns/diamond_upholstery.png);
-    background-size: 200px 200px;
-}
-
-.theme-pattern-subtle-stripes .section.alt {
-    background-image: url(../images/patterns/subtle_stripes.png);
-    background-size: 40px 40px;
-}
-
-/* THEME COLORS */
-/* ------------ */
-/* Green color */
-.theme-color-green a {
-    color: #779922;
-}
-.theme-color-green a:hover {
-    color: #97c32b;
-}
-.theme-color-green #masthead .brand:hover i {
-    color: #779922;
-}
-.theme-color-green .navbar .nav li.dropdown.active > .dropdown-toggle:hover,
-.theme-color-green .navbar .nav li.dropdown.open > .dropdown-toggle, .theme-color-green .navbar .nav li.dropdown.active > .dropdown-toggle, .theme-color-green .navbar .nav li.dropdown.open.active > .dropdown-toggle,
-.theme-color-green .navbar .nav > .active > a, .theme-color-green .navbar .nav > .active > a:hover, .theme-color-green .navbar .nav > .active > a:focus,
-.theme-color-green .navbar .nav > li > a:focus, .theme-color-green .navbar .nav > li > a:hover {
-    color: #779922;
-}
-.theme-color-green .dropdown-menu a {
-    color: #333333;
-}
-.theme-color-green .dropdown-menu li > a:hover, .theme-color-green .dropdown-menu li > a:focus, .theme-color-green .dropdown-submenu:hover > a {
-    background-color: #719120;
-    background-image: -moz-linear-gradient(top, #779922, #67841d);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#779922), to(#67841d));
-    background-image: -webkit-linear-gradient(top, #779922, #67841d);
-    background-image: -o-linear-gradient(top, #779922, #67841d);
-    background-image: linear-gradient(to bottom, #779922, #67841d);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF779922', endColorstr='#FF67841D', GradientType=0);
-}
-.theme-color-green .page-header a {
-    color: #999999;
-}
-.theme-color-green .page-header a:hover {
-    color: #555555;
-}
-.theme-color-green .pricing-table-price {
-    color: #779922;
-}
-.theme-color-green .pricing-table-featured {
-    background: #779922;
-    border-color: #465a14;
-    text-shadow: 0px 1px 0px #576f19;
-}
-.theme-color-green .pricing-table-featured .pricing-table-price {
-    color: #779922;
-}
-.theme-color-green .pricing-table-featured .pricing-table-list {
-    border-color: #576f19;
-    -webkit-box-shadow: 0px 1px 0px #97c32b;
-    -moz-box-shadow: 0px 1px 0px #97c32b;
-    box-shadow: 0px 1px 0px #97c32b;
-}
-.theme-color-green .pricing-table-featured li {
-    border-color: #97c32b;
-    -webkit-box-shadow: 0px -1px 0px #576f19;
-    -moz-box-shadow: 0px -1px 0px #576f19;
-    box-shadow: 0px -1px 0px #576f19;
-}
-.theme-color-green .pricing-table-featured li:first-child {
-    border-color: transparent;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-}
-.theme-color-green .btn-primary {
-    color: white;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background-color: #83a825;
-    background-image: -moz-linear-gradient(top, #779922, #97c32b);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#779922), to(#97c32b));
-    background-image: -webkit-linear-gradient(top, #779922, #97c32b);
-    background-image: -o-linear-gradient(top, #779922, #97c32b);
-    background-image: linear-gradient(to bottom, #779922, #97c32b);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF779922', endColorstr='#FF97C32B', GradientType=0);
-    border-color: #97c32b #97c32b #67841d;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    *background-color: #97c32b;
-    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-.theme-color-green .btn-primary:hover, .theme-color-green .btn-primary:active, .theme-color-green .btn-primary.active, .theme-color-green .btn-primary.disabled, .theme-color-green .btn-primary[disabled] {
-    color: white;
-    background-color: #97c32b;
-    *background-color: #87ae27;
-}
-.theme-color-green .btn-primary:active, .theme-color-green .btn-primary.active {
-    background-color: #779922 \9;
-}
-
-/* Red color */
-.theme-color-red a {
-    color: #e8481d;
-}
-.theme-color-red a:hover {
-    color: #ed6d4b;
-}
-.theme-color-red #masthead .brand:hover i {
-    color: #e8481d;
-}
-.theme-color-red .navbar .nav li.dropdown.active > .dropdown-toggle:hover,
-.theme-color-red .navbar .nav li.dropdown.open > .dropdown-toggle, .theme-color-red .navbar .nav li.dropdown.active > .dropdown-toggle, .theme-color-red .navbar .nav li.dropdown.open.active > .dropdown-toggle,
-.theme-color-red .navbar .nav > .active > a, .theme-color-red .navbar .nav > .active > a:hover, .theme-color-red .navbar .nav > .active > a:focus,
-.theme-color-red .navbar .nav > li > a:focus, .theme-color-red .navbar .nav > li > a:hover {
-    color: #e8481d;
-}
-.theme-color-red .dropdown-menu a {
-    color: #333333;
-}
-.theme-color-red .dropdown-menu li > a:hover, .theme-color-red .dropdown-menu li > a:focus, .theme-color-red .dropdown-submenu:hover > a {
-    background-color: #e1441a;
-    background-image: -moz-linear-gradient(top, #e8481d, #d63e16);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e8481d), to(#d63e16));
-    background-image: -webkit-linear-gradient(top, #e8481d, #d63e16);
-    background-image: -o-linear-gradient(top, #e8481d, #d63e16);
-    background-image: linear-gradient(to bottom, #e8481d, #d63e16);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE8481D', endColorstr='#FFD63E16', GradientType=0);
-}
-.theme-color-red .page-header a {
-    color: #999999;
-}
-.theme-color-red .page-header a:hover {
-    color: #555555;
-}
-.theme-color-red .pricing-table-price {
-    color: #e8481d;
-}
-.theme-color-red .pricing-table-featured {
-    background: #e8481d;
-    border-color: #a73111;
-    text-shadow: 0px 1px 0px #bf3813;
-}
-.theme-color-red .pricing-table-featured .pricing-table-price {
-    color: #e8481d;
-}
-.theme-color-red .pricing-table-featured .pricing-table-list {
-    border-color: #bf3813;
-    -webkit-box-shadow: 0px 1px 0px #ed6d4b;
-    -moz-box-shadow: 0px 1px 0px #ed6d4b;
-    box-shadow: 0px 1px 0px #ed6d4b;
-}
-.theme-color-red .pricing-table-featured li {
-    border-color: #ed6d4b;
-    -webkit-box-shadow: 0px -1px 0px #bf3813;
-    -moz-box-shadow: 0px -1px 0px #bf3813;
-    box-shadow: 0px -1px 0px #bf3813;
-}
-.theme-color-red .pricing-table-featured li:first-child {
-    border-color: transparent;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-}
-.theme-color-red .btn-primary {
-    color: white;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background-color: #e9552e;
-    background-image: -moz-linear-gradient(top, #e8481d, #ed6d4b);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e8481d), to(#ed6d4b));
-    background-image: -webkit-linear-gradient(top, #e8481d, #ed6d4b);
-    background-image: -o-linear-gradient(top, #e8481d, #ed6d4b);
-    background-image: linear-gradient(to bottom, #e8481d, #ed6d4b);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE8481D', endColorstr='#FFED6D4B', GradientType=0);
-    border-color: #ed6d4b #ed6d4b #d63e16;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    *background-color: #ed6d4b;
-    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-.theme-color-red .btn-primary:hover, .theme-color-red .btn-primary:active, .theme-color-red .btn-primary.active, .theme-color-red .btn-primary.disabled, .theme-color-red .btn-primary[disabled] {
-    color: white;
-    background-color: #ed6d4b;
-    *background-color: #ea5b34;
-}
-.theme-color-red .btn-primary:active, .theme-color-red .btn-primary.active {
-    background-color: #e8481d \9;
-}
 
 /* MEDIA QUERIES */
 /* ------------- */
@@ -1295,14 +926,6 @@ figure {
         background-color: transparent;
         color: #333333;
         text-decoration: none;
-    }
-
-    .theme-color-red .navbar .nav .active > a, .theme-color-red .navbar .nav a:hover, .theme-color-red .nav-collapse .nav > li > a:hover, .theme-color-red .nav-collapse .dropdown-menu a:hover {
-        color: #e8481d;
-        background: #fbfbfb;
-        -webkit-box-shadow: #eeeeee 0px 0px 5px inset;
-        -moz-box-shadow: #eeeeee 0px 0px 5px inset;
-        box-shadow: #eeeeee 0px 0px 5px inset;
     }
 
     .nav-collapse .nav > li > a, .nav-collapse .dropdown-menu a {
@@ -1389,85 +1012,20 @@ figure {
         display: block;
     }
 }
-/* retina displays backgrounds */
-@media only screen and (-Webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3 / 2), only screen and (min-device-pixel-ratio: 1.5) {
-    .theme-pattern-lightmesh .section.alt {
-        background-image: url(../images/patterns/lghtmesh_@2X.png);
-    }
 
-    .theme-pattern-bedge-grunge .section.alt {
-        background-image: url(../images/patterns/bedge_grunge_@2X.png);
-    }
+.home-carosel-container {
+    margin-top: 25px;
+}
 
-    .theme-pattern-grid .section.alt {
-        background-image: url(../images/patterns/grid_@2X.png);
-    }
+.main-icon {
+    font-size: 400px;
+    margin-top: 100px;
+}
 
-    .theme-pattern-noisy-grid .section.alt {
-        background-image: url(../images/patterns/noisy_grid_@2X.png);
-    }
+.no-background {
+    background: none;
+}
 
-    .theme-pattern-subtle-grey .section.alt {
-        background-image: url(../images/patterns/grey_@2X.png);
-    }
-
-    .theme-pattern-retina-wood .section.alt {
-        background-image: url(../images/patterns/retina_wood_@2X.png);
-    }
-
-    .theme-pattern-noise-lines .section.alt {
-        background-image: url(../images/patterns/noise_lines_@2X.png);
-    }
-
-    .theme-pattern-tiny-grid .section.alt {
-        background-image: url(../images/patterns/tiny_grid_@2X.png);
-    }
-
-    .theme-pattern-clean-paper .section.alt {
-        background-image: url(../images/patterns/extra_clean_paper_@2X.png);
-    }
-
-    .theme-pattern-farmer .section.alt {
-        background-image: url(../images/patterns/farmer_@2X.png);
-    }
-
-    .theme-pattern-project-papper .section.alt {
-        background-image: url(../images/patterns/project_papper_@2X.png);
-    }
-
-    .theme-pattern-concrete-wall .section.alt {
-        background-image: url(../images/patterns/concrete_wall_2_@2X.png);
-    }
-
-    .theme-pattern-wavecut .section.alt {
-        background-image: url(../images/patterns/wavecut_@2X.png);
-    }
-
-    .theme-pattern-little-pluses .section.alt {
-        background-image: url(../images/patterns/little_pluses_@2X.png);
-    }
-
-    .theme-pattern-light-honeycomp .section.alt {
-        background-image: url(../images/patterns/light_honeycomb_@2X.png);
-    }
-
-    .theme-pattern-old-mathematics .section.alt {
-        background-image: url(../images/patterns/old_mathematics_@2X.png);
-    }
-
-    .theme-pattern-45-degree-fabric .section.alt {
-        background-image: url(../images/patterns/45degreee_fabric_@2X.png);
-    }
-
-    .theme-pattern-strange-bullseyes .section.alt {
-        background-image: url(../images/patterns/strange_bullseyes_@2X.png);
-    }
-
-    .theme-pattern-diamond-upholstery .section.alt {
-        background-image: url(../images/patterns/diamond_upholstery_@2X.png);
-    }
-
-    .theme-pattern-subtle-stripes .section.alt {
-        background-image: url(../images/patterns/subtle_stripes_@2X.png);
-    }
+.home-three-panel-container {
+    margin-top: 40px;
 }
