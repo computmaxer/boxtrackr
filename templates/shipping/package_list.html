@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}My Packages{% endblock %}
+
+{% block header %}
+    My Packages
+    <a id="add-package-button" href="#add-package-modal" class="btn btn-info pull-right" style="display: inline;" role="button" data-toggle="modal"><i class="icon-plus-sign"></i> Add Package</a>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span12">
+
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Tracking #</th>
+                        <th>Purchase Site</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for package in packages %}
+{#                    #TODO: Customize table. Make it look less like bootstrapy same-ness#}
+                    <tr>
+                        <td><i class="icon-caret-right" style="color:#7A7A7A;"></i></td>
+                        <td>{{ package.name }}</td>
+                        <td>{{ package.tracking_number }}</td>
+                        <td>{{ package.site }}</td>
+                        <td>{{ package.description }}</td>
+                        <td>TODO</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">You don't have any packages yet!</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {{ tree }}
+
+        </div>
+    </div>
+
+    <div class="modal" id="add-package-modal" tabindex="-1" role="dialog" aria-labelledby="add-package-modal" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Add Package</h3>
+        </div>
+        <form id="add_package" class="form-horizontal modal-form" action='' method="POST">
+            <div class="modal-body">
+                <div>
+                    {{ render_form(form) }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-info" value="Submit" />
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+        {% if add_package_open %}
+            $('#add-package-button').trigger('click');
+        {% endif %}
+        });
+
+    </script>
+
+{% endblock %}

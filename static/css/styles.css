@@ -7,6 +7,11 @@
  * (c) 2012 Oxygenna.com
  *
  */
+.required-indicator {
+    color: #FF0000;
+    padding-left: 2px;
+}
+
 #style-switcher {
     position: absolute;
     right: 100px;
@@ -477,9 +482,9 @@ figure {
 .page-header h1 {
     line-height: 1;
 }
-.page-header a {
-    color: #999999;
-}
+/*.page-header a {*/
+    /*color: #999999;*/
+/*}*/
 .page-header a:hover {
     color: #555555;
     text-decoration: none;

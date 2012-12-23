@@ -23,7 +23,6 @@
         <script type="text/javascript" src="/static/js/jquery-1.8.3.js"></script>
         <script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="/static/js/bootstrap.js"></script>
-        <script type="text/javascript" src="/static/js/bootstrap-modal.js"></script>
         <script type="text/javascript" src="/static/js/chosen.jquery.min.js"></script>
         <script type="text/javascript" src="/static/js/chosen.autoload.js"></script>
         <script type="text/javascript" src="/static/js/jquery.datatable.js"></script>
@@ -111,6 +110,13 @@
             });
             //Sets the min-height on initial page load.
             $(window).trigger('resize');
+
+            //Add id field to all forms.
+            $('form').each(function(){
+                var that = $(this);
+                var idInput = $("<input>").attr("type", "hidden").attr("name", "id").val(that.attr('id'));
+                that.append($(idInput));
+            });
 
             // Ajax request for login
             function login() {
