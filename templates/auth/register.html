@@ -15,12 +15,12 @@
                     {{ form.username(placeholder='Username', style='width: 95%;')|safe }}
                     {{ form.password(placeholder='Password', style='width: 95%;')|safe }}
                     {{ form.password_confirm(placeholder='Confirm', style='width: 95%')|safe }}
-                    <button type="button" class="btn btn-primary btn-block" id="submit">Register</button>
+                    <button type="button" class="btn btn-info btn-block" id="submit">Register</button>
                 </form>
 
                 <hr>
-                <a class="btn btn-primary btn-block" href="{{ url_for('facebook_login') }}">Register with Facebook</a>
-                <a class="btn btn-primary btn-block" href="{{ url_for('google_login') }}">Register with Google</a>
+                <a class="btn btn-info btn-block" href="{{ url_for('facebook_login') }}">Register with Facebook</a>
+                <a class="btn btn-info btn-block" href="{{ url_for('google_login') }}">Register with Google</a>
 
 
             </div>
