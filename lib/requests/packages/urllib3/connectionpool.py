@@ -90,7 +90,7 @@ class VerifiedHTTPSConnection(HTTPSConnection):
 
         self.key_file = key_file
         self.cert_file = cert_file
-        self.cert_reqs = ssl_req_scheme.get(cert_reqs) or ssl.CERT_NONE
+        self.cert_reqs = ssl_req_scheme.get(cert_reqs) or 0  # ssl.CERT_NONE
         self.ca_certs = ca_certs
 
     def connect(self):

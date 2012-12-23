@@ -33,7 +33,7 @@
                         <td>{{ package.tracking_number }}</td>
                         <td>{{ package.site }}</td>
                         <td>{{ package.description }}</td>
-                        <td>TODO</td>
+                        <td>{{ package.STATUS_TEXT }}</td>
                     </tr>
                 {% else %}
                     <tr>
@@ -42,8 +42,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-
-            {{ tree }}
 
         </div>
     </div>

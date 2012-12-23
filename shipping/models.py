@@ -7,7 +7,7 @@ from shipping import api as shapi
 
 import datetime
 
-
+import logging
 class Package(db.Model, base_models.Timestamped):
     name = db.StringProperty()                   # Name this package
     tracking_number = db.StringProperty()        # Tracking number on the shipment
@@ -30,9 +30,13 @@ class Package(db.Model, base_models.Timestamped):
             return self.estimated_arrival
 
     def get_status(self):
-        if self.last_checked < self.api_update_time:
+        if not self.last_checked or self.last_checked < self.api_update_time:
             self.update_values_from_api()
         return self.status
+
+    def get_status_text(self):
+        status = self.get_status()
+        return shapi.STATUS_DICT.get(status, "An error has occured")
 
     def update_values_from_api(self):
         shipments = shapi.query_tracking(self.tracking_number)

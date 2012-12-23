@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:KnownTrackingRequest xmlns:req="http://www.dhl.com"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.dhl.com
+                        TrackingRequestKnown.xsd">
+    <Request>
+        <ServiceHeader>
+            <MessageTime>{{ time }}</MessageTime>
+            <MessageReference>{{ guid }}</MessageReference>
+            <SiteID>{{ username }}</SiteID>
+            <Password>{{ password }}</Password>
+        </ServiceHeader>
+    </Request>
+    <LanguageCode>en</LanguageCode>
+    <AWBNumber>{{ tracking_number }}</AWBNumber>
+    <LevelOfDetails>ALL_CHECK_POINTS</LevelOfDetails>
+</req:KnownTrackingRequest>

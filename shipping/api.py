@@ -3,24 +3,31 @@ from xml.etree import ElementTree as ET
 
 from flask.templating import render_template
 
+import sys
 import requests
+import datetime
+import random
+import uuid
 import settings
 import logging
 
 
+INVALID_NUMBER = -2
 NO_INFO = -1
 RECEIVED_NOTICE = 0
 IN_TRANSIT = 1
 OUT_FOR_DELIVERY = 2
 DELIVERED = 3
 
-STATUS_LIST = [(NO_INFO, "Carrier has no information"),
+STATUS_LIST = [(INVALID_NUMBER, "Invalid Tracking Number"),
+               (NO_INFO, "Carrier has no information"),
                (RECEIVED_NOTICE, "Carrier has been notified of the shipment"),
                (IN_TRANSIT, "In Transit"),
                (OUT_FOR_DELIVERY, "Out for Delivery"),
                (DELIVERED, "Delivered")
 ]
 STATUS_DICT = {
+    INVALID_NUMBER: "Invalid Tracking Number",
     NO_INFO: "Carrier has no information",
     RECEIVED_NOTICE: "Carrier has been notified of the shipment",
     IN_TRANSIT: "In Transit",
@@ -32,13 +39,19 @@ STATUS_DICT = {
 def determine_carrier(tracking_number):
     #TODO: regex matching to return the proper carrier.
     #return 'fedex'
-    #return 'usps'
-    return 'ups'  # TODO: Temporary, obviously.
+    if len(tracking_number) < 12:
+        return 'dhl'
+    elif '1Z' in tracking_number:
+        return 'ups'  # TODO: Temporary, obviously.
+    else:
+        return 'usps'
 
 
 def query_tracking(tracking_number):
+    logging.warning("Querying tracking API")
     carrier = determine_carrier(tracking_number)
-    method = locals["query_%s_tracking" % carrier]
+    this = sys.modules[__name__]
+    method = getattr(this, "query_%s_tracking" % carrier)
     return method(tracking_number)
 
 
@@ -49,11 +62,11 @@ def _determine_status(status_text):
         return NO_INFO
     elif 'received' in low_text:  # TODO: figure out what this needs to be
         return RECEIVED_NOTICE
-    elif 'transit' in low_text:  # TODO: figure out what this needs to be
+    elif 'transit' in low_text or low_text == 'pu':  # TODO: figure out what this needs to be
         return IN_TRANSIT
-    elif 'out' in low_text:  # TODO: figure out what this needs to be
+    elif 'out' in low_text or low_text == 'wc':  # TODO: figure out what this needs to be
         return OUT_FOR_DELIVERY
-    elif 'delivered' in low_text:  # TODO: figure out what this needs to be
+    elif 'delivered' or 'ok' in low_text:  # TODO: figure out what this needs to be
         return DELIVERED
 
 
@@ -67,6 +80,7 @@ def query_ups_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_ups_tracking_xml(tracking_number)
+    logging.warning(response)
     tree = ET.XML(response)
     return _parse_ups_tracking_response_xml(tree)
 
@@ -85,12 +99,21 @@ def _parse_ups_tracking_response_xml(root):
                     'tracking_number': package.find('TrackingNumber').text,
                     'status': _determine_status(status_text),
                 }
-                #TODO: Add more info to the dict?
+                #TODO: Add more info to the dict
                 packages.append(info)
             shipments.append(packages)
         return shipments
-
-    logging.error(root.items())
+    elif status.text == "Failure":
+        error = response.find('Error').find('ErrorDescription')
+        if error.text == "Invalid tracking number":
+            shipments = []
+            packages = [{'status': INVALID_NUMBER,}]
+            shipments.append(packages)
+            return shipments
+        else:
+            logging.error(str(root) + " ,".join(root.items()))
+    else:
+        logging.error(str(root) + " ,".join(root.items()))
     # Query failed.  #TODO raise some kind of exception
     return None
 
@@ -99,6 +122,8 @@ def _get_ups_tracking_xml(tracking_number):
     path = "https://wwwcie.ups.com/ups.app/xml/Track"
     ctx = {
         'tracking_number': tracking_number,
+        'guid': uuid.uuid4(),
+        'username': settings.UPS_API_USERNAME,
         'password': settings.UPS_API_PASSWORD,
     }
     xml_req = render_template("xml/ups_tracking_request.html", **ctx)
@@ -131,6 +156,7 @@ def _get_fedex_tracking_xml(tracking_number):
     #path = "https://gateway.fedex.com:443/xml"
     ctx = {
         'tracking_number': tracking_number,
+        'username': settings.FEDEX_API_USERNAME,
         'password': settings.FEDEX_API_PASSWORD,
     }
     xml_req = render_template("xml/fedex_tracking_request.html", **ctx)
@@ -149,22 +175,102 @@ def query_usps_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_usps_tracking_xml(tracking_number)
+    logging.warning(response)
     tree = ET.XML(response)
     return _parse_usps_tracking_response_xml(tree)
 
 
 def _parse_usps_tracking_response_xml(root):
-    #TODO: Do this.
-    return root
+    shipments = []
+    if root.tag == 'TrackResponse':
+        logging.warning("root.tag is a TrackResponse")
+        packages = []
+        for package in root.findall('TrackInfo'):
+            summary = package.find('TrackSummary')
+            status = summary.find('Event').text
+            info = {
+                'tracking_number': package.get('ID'),
+                'status': _determine_status(status),
+            }
+            #TODO: Add more info to the dict
+            packages.append(info)
+        shipments.append(packages)
+        return shipments
+
+    #TODO: Handle error
+    if root.tag == 'Error':
+        logging.error("USPS Error: %s" % root.find('Description').text)
+    else:
+        logging.error("Error parsing USPS root response.")
+    return None
 
 
 def _get_usps_tracking_xml(tracking_number):
-    path = "" #TODO: find url
     ctx = {
         'tracking_number': tracking_number,
+        'username': settings.USPS_API_USERNAME,
         'password': settings.USPS_API_PASSWORD,
     }
     xml_req = render_template("xml/usps_tracking_request.html", **ctx)
+    path = "http://testing.shippingapis.com/ShippingAPITest.dll?API=TrackV2&XML=%s" % xml_req
+    r = requests.get(path)
+    return r.text
 
+
+# DHL Tracking API
+####################################################################################################
+def query_dhl_tracking(tracking_number):
+    """
+    Check shipment status with a USPS tracking number.  Queries the USPS API for the results in
+    XML, and then parses the XML to return the shipment information.
+    :param tracking_number: The USPS tracking number of the shipment being tracked.
+    :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
+    """
+    response = _get_dhl_tracking_xml(tracking_number)
+    logging.warning(response)
+    tree = ET.XML(response)
+    return _parse_dhl_tracking_response_xml(tree)
+
+
+def _parse_dhl_tracking_response_xml(root):
+    shipments = []
+    if root.tag == '{http://www.dhl.com}TrackingResponse':
+        logging.warning("root.tag is a TrackResponse")
+        packages = []
+        for package in root.findall('AWBInfo'):
+            status = ''
+            for shipment_event in package.findall('ShipmentEvent'):
+                #TODO: This is silly.
+                status = shipment_event.find('ServiceEvent').find('EventCode').text
+                logging.warning(status)
+            info = {
+                'tracking_number': package.find('AWBNumber').text,
+                'status': _determine_status(status),
+            }
+            #TODO: Add more info to the dict
+            packages.append(info)
+        shipments.append(packages)
+        return shipments
+
+    #TODO: Handle error
+    if root.tag == '{http://www.dhl.com}ShipmentTrackingErrorResponse':
+        error = root.find('Response').find('Status').find('Condition').find('ConditionData')
+        logging.error("DHL Error: %s" % error.text)
+    else:
+        logging.error("Error parsing DHL root response.")
+    return None
+
+
+def _get_dhl_tracking_xml(tracking_number):
+    ctx = {
+        'tracking_number': tracking_number,
+        'time': datetime.datetime.now().isoformat(),
+        'guid': random.randint(1000000000000000000000000000, 1999999999999999999999999999),
+        'username': settings.DHL_API_USERNAME,
+        'password': settings.DHL_API_PASSWORD
+    }
+    xml_req = render_template("xml/dhl_tracking_request.html", **ctx)
+    path = "http://xmlpitest-ea.dhl.com/XMLShippingServlet"
     r = requests.post(path, data=xml_req)
     return r.text
+
