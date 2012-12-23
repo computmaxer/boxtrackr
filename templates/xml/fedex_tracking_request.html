@@ -1,0 +1,26 @@
+<TrackRequest xmlns='http://fedex.com/ws/track/v3'>
+    <WebAuthenticationDetail>
+        <UserCredential>
+            <Key>Bwc8CnbPXQHuvCd4</Key>
+            <Password>{{ password }}</Password>
+        </UserCredential>
+    </WebAuthenticationDetail>
+    <ClientDetail>
+        <AccountNumber>510087143</AccountNumber>
+        <MeterNumber>118574310</MeterNumber>
+    </ClientDetail>
+    <TransactionDetail>
+        <CustomerTransactionId>ActiveShipping</CustomerTransactionId>
+    </TransactionDetail>
+    <Version>
+        <ServiceId>trck</ServiceId>
+        <Major>3</Major>
+        <Intermediate>0</Intermediate>
+        <Minor>0</Minor>
+    </Version>
+    <PackageIdentifier>
+        <Value>{{ tracking_number }}</Value>
+        <Type>TRACKING_NUMBER_OR_DOORTAG</Type>
+    </PackageIdentifier>
+    <IncludeDetailedScans>1</IncludeDetailedScans>
+</TrackRequest>
