@@ -10,42 +10,17 @@
                     <h3>Register</h3>
                 </div>
 
-                <form class="form-horizontal" method="post" action="" id="basic_login_form">
-                    <div class="control-group">
-                        <label class="control-label">Email</label>
-                        <div class="controls">
-                            {{ form.email|safe }}
-                        </div>
-                    </div>
-                    <div class="control-group" id="username_control">
-                        <label class="control-label">Username</label>
-                        <div class="controls">
-                            {{ form.username|safe }}
-                            <i class="icon-ok" id="username-confirm" style="position: relative; right: -200px; top: -25px; color: #209920"></i>
-                        </div>
-                    </div>
-                    <div class="control-group" id="password_control" style="margin-top: -25px;">
-                        <label class="control-label">Password</label>
-                        <div class="controls">
-                            {{ form.password|safe }}
-                        </div>
-                    </div>
-                    <div class="control-group" id="password_confirm_control">
-                        <label class="control-label">Confirm</label>
-                        <div class="controls">
-                            {{ form.password_confirm|safe }}
-                            <i class="icon-ok" id="password-confirm" style="position: relative; right: -200px; top: -25px; color: #209920"></i>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <button type="button" class="btn btn-primary" id="submit">Register</button>
-                        </div>
-                    </div>
+                <form class="form" method="post" action="" id="basic_login_form">
+                    {{ form.email(placeholder='Email', style='width: 95%;')|safe }}
+                    {{ form.username(placeholder='Username', style='width: 95%;')|safe }}
+                    {{ form.password(placeholder='Password', style='width: 95%;')|safe }}
+                    {{ form.password_confirm(placeholder='Confirm', style='width: 95%')|safe }}
+                    <button type="button" class="btn btn-info btn-block" id="submit">Register</button>
                 </form>
 
-                <a class="btn btn-primary btn-block" href="{{ url_for('facebook_login') }}">Login with Facebook</a>
-                <a class="btn btn-primary btn-block" href="{{ url_for('google_login') }}">Login with Google</a>
+                <hr>
+                <a class="btn btn-info btn-block" href="{{ url_for('facebook_login') }}">Register with Facebook</a>
+                <a class="btn btn-info btn-block" href="{{ url_for('google_login') }}">Register with Google</a>
 
 
             </div>
@@ -56,11 +31,6 @@
     <script>
 
     $(document).ready(function(){
-        $('#username-confirm').css('color', '#ffffff');
-        $('#basic_login_form').find('input').css("padding-right", "25px")
-        $('#basic_login_form').find('input').css("width", "187px")
-        $("#password-confirm").css('color', '#ffffff');
-
 
         $("#username").blur(function () {
             $('#username-confirm').css('color', '#ffffff');
