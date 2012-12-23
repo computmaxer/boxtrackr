@@ -1,11 +1,10 @@
 from flask import request, redirect, url_for, jsonify
 from flask.templating import render_template
 
-import logging
-import auth
+from auth import UserAwareView
 
 
-class MainHandler(auth.UserAwareView):
+class MainHandler(UserAwareView):
     active_nav = 'home'
 
     def get(self):

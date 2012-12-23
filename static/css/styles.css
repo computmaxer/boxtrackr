@@ -5,6 +5,11 @@
  *
  */
 
+.required-indicator {
+    color: #FF0000;
+    padding-left: 2px;
+}
+
 
 /* GENERAL MARKUP RULES */
 /* -------------------- */
@@ -377,9 +382,9 @@ figure {
 .page-header h1 {
     line-height: 1;
 }
-.page-header a {
-    color: #999999;
-}
+/*.page-header a {*/
+    /*color: #999999;*/
+/*}*/
 .page-header a:hover {
     color: #555555;
     text-decoration: none;
