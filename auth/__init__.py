@@ -1,8 +1,9 @@
 import auth
 from auth import models as auth_models
 
+from base import BaseMultiMethodView
+
 from flask import session, redirect, url_for
-from flask.views import MethodView
 
 from lib import flask_login
 from lib.flask_login import LoginManager
@@ -25,8 +26,7 @@ def load_user(userid):
     return auth_models.WTUser.get_by_id(int(userid))
 
 
-class UserAwareView(MethodView):
-    active_nav = None
+class UserAwareView(BaseMultiMethodView):
 
     @property
     def session(self):
