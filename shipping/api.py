@@ -86,7 +86,7 @@ def query_ups_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_ups_tracking_xml(tracking_number)
-    if response:
+    if response and 200 <= response.code < 300:
         logging.info(response)  # TODO: Remove
         tree = ET.XML(response)
         return _parse_ups_tracking_response_xml(tree)
@@ -152,7 +152,7 @@ def query_fedex_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_fedex_tracking_xml(tracking_number)
-    if response:
+    if response and 200 <= response.code < 300:
         logging.info(response)
         tree = ET.XML(response)
         return _parse_fedex_tracking_response_xml(tree)
@@ -190,7 +190,7 @@ def query_usps_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_usps_tracking_xml(tracking_number)
-    if response:
+    if response and 200 <= response.code < 300:
         logging.info(response)
         tree = ET.XML(response)
         return _parse_usps_tracking_response_xml(tree)
@@ -246,7 +246,7 @@ def query_dhl_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_dhl_tracking_xml(tracking_number)
-    if response:
+    if response and 200 <= response.code < 300:
         logging.info(response)
         tree = ET.XML(response)
         return _parse_dhl_tracking_response_xml(tree)
