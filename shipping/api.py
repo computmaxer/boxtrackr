@@ -48,7 +48,13 @@ def determine_carrier(tracking_number):
 
 
 def query_tracking(tracking_number):
-    logging.warning("Querying tracking API")
+    """
+    Query a tracking number without knowing the carrier.  Function will determine the proper carrier
+    based on the tracking number and then call the appropriate shipping API function.
+    :param tracking_number: The tracking number to query for.
+    :return: The result list from the API function if the query was successful.
+    """
+    logging.info("Querying tracking API")
     carrier = determine_carrier(tracking_number)
     this = sys.modules[__name__]
     method = getattr(this, "query_%s_tracking" % carrier)
@@ -80,9 +86,10 @@ def query_ups_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_ups_tracking_xml(tracking_number)
-    logging.warning(response)
-    tree = ET.XML(response)
-    return _parse_ups_tracking_response_xml(tree)
+    if response:
+        logging.info(response)  # TODO: Remove
+        tree = ET.XML(response)
+        return _parse_ups_tracking_response_xml(tree)
 
 
 def _parse_ups_tracking_response_xml(root):
@@ -128,8 +135,11 @@ def _get_ups_tracking_xml(tracking_number):
     }
     xml_req = render_template("xml/ups_tracking_request.html", **ctx)
 
-    r = requests.post(path, data=xml_req)
-    return r.text
+    try:
+        r = requests.post(path, data=xml_req)
+        return r.text
+    except requests.ConnectionError, e:
+        logging.error("Error connecting to UPS: %s" % e)
 
 
 # FedEx Tracking API
@@ -142,8 +152,10 @@ def query_fedex_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_fedex_tracking_xml(tracking_number)
-    tree = ET.XML(response)
-    return _parse_fedex_tracking_response_xml(tree)
+    if response:
+        logging.info(response)
+        tree = ET.XML(response)
+        return _parse_fedex_tracking_response_xml(tree)
 
 
 def _parse_fedex_tracking_response_xml(root):
@@ -161,8 +173,11 @@ def _get_fedex_tracking_xml(tracking_number):
     }
     xml_req = render_template("xml/fedex_tracking_request.html", **ctx)
 
-    r = requests.post(path, data=xml_req)
-    return r.text
+    try:
+        r = requests.post(path, data=xml_req)
+        return r.text
+    except requests.ConnectionError, e:
+        logging.error("Error connecting to FedEx: %s" % e)
 
 
 # USPS Tracking API
@@ -175,9 +190,10 @@ def query_usps_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_usps_tracking_xml(tracking_number)
-    logging.warning(response)
-    tree = ET.XML(response)
-    return _parse_usps_tracking_response_xml(tree)
+    if response:
+        logging.info(response)
+        tree = ET.XML(response)
+        return _parse_usps_tracking_response_xml(tree)
 
 
 def _parse_usps_tracking_response_xml(root):
@@ -213,8 +229,11 @@ def _get_usps_tracking_xml(tracking_number):
     }
     xml_req = render_template("xml/usps_tracking_request.html", **ctx)
     path = "http://testing.shippingapis.com/ShippingAPITest.dll?API=TrackV2&XML=%s" % xml_req
-    r = requests.get(path)
-    return r.text
+    try:
+        r = requests.get(path)
+        return r.text
+    except requests.ConnectionError, e:
+        logging.error("Error connecting to USPS: %s" % e)
 
 
 # DHL Tracking API
@@ -227,9 +246,10 @@ def query_dhl_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_dhl_tracking_xml(tracking_number)
-    logging.warning(response)
-    tree = ET.XML(response)
-    return _parse_dhl_tracking_response_xml(tree)
+    if response:
+        logging.info(response)
+        tree = ET.XML(response)
+        return _parse_dhl_tracking_response_xml(tree)
 
 
 def _parse_dhl_tracking_response_xml(root):
@@ -271,6 +291,8 @@ def _get_dhl_tracking_xml(tracking_number):
     }
     xml_req = render_template("xml/dhl_tracking_request.html", **ctx)
     path = "http://xmlpitest-ea.dhl.com/XMLShippingServlet"
-    r = requests.post(path, data=xml_req)
-    return r.text
-
+    try:
+        r = requests.post(path, data=xml_req)
+        return r.text
+    except requests.ConnectionError, e:
+        logging.error("Error connecting to DHL: %s" % e)

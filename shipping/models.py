@@ -50,6 +50,7 @@ class Package(db.Model, base_models.Timestamped):
                 self.last_checked = datetime.datetime.now()
                 self.put()
                 return True
+        logging.error("An error occured while retrieving fresh values from the shipping API")
         return False
 
     @property
