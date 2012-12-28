@@ -1,5 +1,13 @@
 import logging
 import webapp2
+
+import sys
+import os
+
+ROOT_PATH = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+LIB_PATH = os.path.join(ROOT_PATH, 'lib')
+sys.path.insert(0, LIB_PATH)
+
 from google.appengine.ext.webapp.mail_handlers import InboundMailHandler
 from google.appengine.ext.webapp.util import run_wsgi_app
 from email.utils import parseaddr
