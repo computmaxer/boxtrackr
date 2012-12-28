@@ -72,7 +72,8 @@ class Register(auth.UserAwareView):
                     registered = True
 
                     subject = "Welcome to Web Tournaments"
-                    body = mail.generate_email_body("email/auth/registration_email.html", username=new_user.username)
+                    body = mail.generate_email_body("email/auth/registration_email.html",
+                                                    username=new_user.username)
 
                     mail.send_email(new_user.email, subject, body)
 
@@ -96,24 +97,29 @@ class Login(auth.UserAwareView):
     def post(self):
 
         form = auth_forms.LoginForm(request.form)
-        error = None
-        loggedin = False
+        authorized = False
         message = None
 
         if form.validate():
 
-            loggedin = auth_utils.check_password(form.password.data, form.email.data)
+            authorized = auth_utils.check_password(form.password.data, form.email.data)
 
-            if not loggedin:
+            if not authorized:
                 message = "Invalid Email / Password"
             else:
-                flask_login.login_user(auth_models.WTUser.all().filter('email =', form.email.data).fetch(1)[0],
-                                       remember=form.remember_me.data)
+                user = auth_models.WTUser.get_user_by_email(form.email.data)
+                flask_login.login_user(user, remember=form.remember_me.data)
 
         else:
             message = "Invalid Email / Password"
+
         next_url = '/tournament/list'
-        response = json.dumps({'loggedin': loggedin, 'error_message': message, 'next_url': next_url})
+        response = json.dumps(
+            {
+                'loggedin': authorized,
+                'error_message': message,
+                'next_url': next_url
+            })
         return response
 
 
@@ -122,19 +128,6 @@ class PasswordReset(auth.UserAwareView):
         context = self.get_context(form = auth_forms.PasswordResetForm())
         return render_template("auth/password_reset.html", **context)
 
-
-class FacebookLogin(auth.UserAwareView):
-
-    def get(self):
-         return facebook.authorize(callback=url_for('facebook_authorized',
-                                                   next=request.args.get('next') or request.referrer or None,
-                                                   _external=True))
-
-class GoogleLogin(auth.UserAwareView):
-
-    def get(self):
-        callback=url_for('google_authorized', _external=True)
-        return google.authorize(callback=callback)
 
 class Logout(auth.UserAwareView):
     decorators = [login_required]
@@ -160,6 +153,25 @@ class Welcome(auth.UserAwareView):
     def get(self):
         context = self.get_context()
         return render_template('auth/welcome.html', **context)
+
+
+#
+# OAuth views
+#
+
+class FacebookLogin(auth.UserAwareView):
+
+    def get(self):
+        return facebook.authorize(callback=url_for('facebook_authorized',
+                                                   next=request.args.get('next') or request.referrer or None,
+                                                   _external=True))
+
+
+class GoogleLogin(auth.UserAwareView):
+
+    def get(self):
+        callback=url_for('google_authorized', _external=True)
+        return google.authorize(callback=callback)
 
 @facebook.tokengetter
 def get_facebook_oauth_token():
