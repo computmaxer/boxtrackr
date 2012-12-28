@@ -1,6 +1,8 @@
 from flask import request
 from flask.templating import render_template
 
+from flask_login import login_required
+
 from shipping import api, forms, actions
 
 import auth
@@ -8,6 +10,7 @@ import logging
 
 
 class PackagesListView(auth.UserAwareView):
+    decorators = [login_required]
 
     def get(self, form=None):
         context = self.get_context()

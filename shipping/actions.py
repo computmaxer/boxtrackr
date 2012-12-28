@@ -12,4 +12,8 @@ def create_package(data, user):
 
 def get_user_packages(user):
     query = shipping_models.Package.all().filter('owner', user)
-    return query.fetch(1000)
+    packages = []
+    for package in query:
+        setattr(package, 'STATUS_TEXT', package.get_status_text())
+        packages.append(package)
+    return packages

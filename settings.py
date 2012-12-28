@@ -11,9 +11,14 @@ CSRF_SESSION_LKEY = 'dev_key_h8asSNJ9s9=+'
 
 MEDIA_MERGED = True
 
+UPS_API_USERNAME = 'username'
 UPS_API_PASSWORD = 'password'
+FEDEX_API_USERNAME = 'username'
 FEDEX_API_PASSWORD = 'password'
+USPS_API_USERNAME = 'username'
 USPS_API_PASSWORD = 'password'
+DHL_API_USERNAME = 'username'
+DHL_API_PASSWORD = 'password'
 
 try:
     from settingslocal import *
