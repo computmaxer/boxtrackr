@@ -12,6 +12,10 @@ handlers:
 - url: /static
   static_dir: static
 
+- url: /_ah/mail/.+
+  script: email.py
+  login: admin
+
 - url: /.*
   script: main.py
 
@@ -24,3 +28,4 @@ builtins:
 
 inbound_services:
   - warmup
+  - mail

@@ -10,6 +10,7 @@ class WTUser(db.Model):
     email = db.EmailProperty()
     created = db.DateTimeProperty(auto_now=True)
     facebook_id = db.StringProperty()
+    has_logged_in = db.BooleanProperty(default=True)
 
     def get_display_name(self):
         if self.name:
@@ -39,3 +40,9 @@ class WTUser(db.Model):
     @classmethod
     def get_user_by_email(cls, email):
         return WTUser.all().filter('email =', email).get()
+
+    @classmethod
+    def create_placeholder_user(cls, email, name=None):
+        user = WTUser(email=email, name=name, has_logged_in=False)
+        db.put(user)
+        return user
