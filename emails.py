@@ -2,7 +2,7 @@ import logging
 import webapp2
 from google.appengine.ext.webapp.mail_handlers import InboundMailHandler
 from google.appengine.ext.webapp.util import run_wsgi_app
-from email.utils import parseaddr
+from emails.utils import parseaddr
 
 from shipping import actions as shipping_actions
 

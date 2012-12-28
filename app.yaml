@@ -13,7 +13,7 @@ handlers:
   static_dir: static
 
 - url: /_ah/mail/.+
-  script: email.py
+  script: emails.py
   login: admin
 
 - url: /.*
