@@ -16,7 +16,7 @@
             <div class="package-list">
                 <div class="header">
                     <div class="packages-summary">You have {{ num_packages }} packages.</div>
-                    <a id="add-package-button" href="#add-package-modal" class="btn btn-info" style="display: inline;" role="button" data-toggle="modal"><i class="icon-plus-sign"></i>&nbsp; Add Package</a>
+                    <a id="add-package-button" href="#add-package-modal" class="btn btn-info pull-right" style="margin-top: 6px;" role="button" data-toggle="modal"><i class="icon-plus-sign"></i>&nbsp; Add Package</a>
                 </div>
             {% for package in packages %}
                 <div id="package-{{ package.key() }}" class="package{% if loop.last %} last{% endif %}">
