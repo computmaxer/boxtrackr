@@ -17,6 +17,7 @@ class PackagesListView(auth.UserAwareView):
         context['add_package_open'] = request.args.get('add', None)
         context['form'] = form or forms.AddPackageForm()
         context['packages'] = actions.get_user_packages(self.user)
+        context['num_packages'] = len(context['packages'])
         return render_template('shipping/package_list.html', **context)
 
     def post_add_package(self):

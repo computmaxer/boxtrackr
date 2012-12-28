@@ -12,6 +12,16 @@
     padding-left: 2px;
 }
 
+/* hover links - links that become underlined when you hover */
+a.hover-link {
+    text-decoration: no-underline;
+    color: #333333;
+}
+
+a.hover-link:hover {
+    text-decoration: underline;
+}
+
 #style-switcher {
     position: absolute;
     right: 100px;
@@ -477,7 +487,7 @@ figure {
 /* page header */
 .page-header {
     margin: 24px 0;
-    padding-bottom: 23px;
+    /*padding-bottom: 23px;*/
 }
 .page-header h1 {
     line-height: 1;
@@ -1036,4 +1046,72 @@ figure {
 
 .home-track-btn {
     margin-top: 20px;
+}
+
+/* Package List */
+.packages-summary {
+    font-size: 18px;
+    padding: 10px;
+    display: inline-block;
+    width: 590px;
+}
+.package-list {
+    width: 100%;
+    background-color: #FEFEFE;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    border-radius: 5px;
+}
+
+.package-list .header {
+    height: 50px;
+    background-color: #999999;
+    background-image: linear-gradient(to bottom, #AAAAAA, #777777);
+    border-radius: 5px 5px 0px 0px;
+    padding: 10px;
+
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.package {
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.package.last {
+    border-bottom: none;
+}
+
+.package .summary {
+    padding: 10px;
+}
+
+.package .summary .name {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 16px;
+    width: 250px;
+}
+
+.package .summary .site {
+    display: inline-block;
+
+}
+
+.package .summary .description {
+    display: inline-block;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.package .summary .status {
+    display: inline-block;
+    float: right;
+}
+
+.package .summary .tracking-number {
+    display: inline-block;
+    font-size: 13px;
+    width: 250px;
 }
