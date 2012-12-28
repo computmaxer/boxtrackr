@@ -8,6 +8,7 @@ def setup_urls(app):
     app.add_url_rule('/auth/register/', view_func=auth_views.Register.as_view('register'))
     app.add_url_rule('/auth/check_username/', view_func=auth_views.check_username.as_view('check_username'))
     app.add_url_rule('/auth/welcome/', view_func=auth_views.Welcome.as_view('welcome'))
+    app.add_url_rule('/auth/password_reset/', view_func=auth_views.PasswordReset.as_view('password_reset'))
 
     # Facebook Oauth URLs
     app.add_url_rule('/auth/facebook_login', view_func=auth_views.FacebookLogin.as_view('facebook_login'))

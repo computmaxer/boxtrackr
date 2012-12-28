@@ -116,6 +116,13 @@ class Login(auth.UserAwareView):
         response = json.dumps({'loggedin': loggedin, 'error_message': message, 'next_url': next_url})
         return response
 
+
+class PasswordReset(auth.UserAwareView):
+    def get(self):
+        context = self.get_context(form = auth_forms.PasswordResetForm())
+        return render_template("auth/password_reset.html", **context)
+
+
 class FacebookLogin(auth.UserAwareView):
 
     def get(self):
