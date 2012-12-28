@@ -86,9 +86,9 @@ def query_ups_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_ups_tracking_xml(tracking_number)
-    if response and 200 <= response.code < 300:
-        logging.info(response)  # TODO: Remove
-        tree = ET.XML(response)
+    if response and 200 <= response.status_code < 300:
+        logging.info(response.text)  # TODO: Remove?
+        tree = ET.XML(response.text)
         return _parse_ups_tracking_response_xml(tree)
 
 
@@ -137,7 +137,7 @@ def _get_ups_tracking_xml(tracking_number):
 
     try:
         r = requests.post(path, data=xml_req)
-        return r.text
+        return r
     except requests.ConnectionError, e:
         logging.error("Error connecting to UPS: %s" % e)
 
@@ -152,9 +152,9 @@ def query_fedex_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_fedex_tracking_xml(tracking_number)
-    if response and 200 <= response.code < 300:
-        logging.info(response)
-        tree = ET.XML(response)
+    if response and 200 <= response.status_code < 300:
+        logging.info(response.text)
+        tree = ET.XML(response.text)
         return _parse_fedex_tracking_response_xml(tree)
 
 
@@ -175,7 +175,7 @@ def _get_fedex_tracking_xml(tracking_number):
 
     try:
         r = requests.post(path, data=xml_req)
-        return r.text
+        return r
     except requests.ConnectionError, e:
         logging.error("Error connecting to FedEx: %s" % e)
 
@@ -190,9 +190,9 @@ def query_usps_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_usps_tracking_xml(tracking_number)
-    if response and 200 <= response.code < 300:
-        logging.info(response)
-        tree = ET.XML(response)
+    if response and 200 <= response.status_code < 300:
+        logging.info(response.text)
+        tree = ET.XML(response.text)
         return _parse_usps_tracking_response_xml(tree)
 
 
@@ -231,7 +231,7 @@ def _get_usps_tracking_xml(tracking_number):
     path = "http://testing.shippingapis.com/ShippingAPITest.dll?API=TrackV2&XML=%s" % xml_req
     try:
         r = requests.get(path)
-        return r.text
+        return r
     except requests.ConnectionError, e:
         logging.error("Error connecting to USPS: %s" % e)
 
@@ -246,9 +246,9 @@ def query_dhl_tracking(tracking_number):
     :return: A list of lists of dictionaries.  Shipments:Packages:InfoDict
     """
     response = _get_dhl_tracking_xml(tracking_number)
-    if response and 200 <= response.code < 300:
-        logging.info(response)
-        tree = ET.XML(response)
+    if response and 200 <= response.status_code < 300:
+        logging.info(response.text)
+        tree = ET.XML(response.text)
         return _parse_dhl_tracking_response_xml(tree)
 
 
@@ -293,6 +293,6 @@ def _get_dhl_tracking_xml(tracking_number):
     path = "http://xmlpitest-ea.dhl.com/XMLShippingServlet"
     try:
         r = requests.post(path, data=xml_req)
-        return r.text
+        return r
     except requests.ConnectionError, e:
         logging.error("Error connecting to DHL: %s" % e)
