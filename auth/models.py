@@ -1,5 +1,7 @@
 from google.appengine.ext import db
 
+from auth import utils as auth_utils
+
 
 class WTUser(db.Model):
     username = db.StringProperty()
@@ -32,6 +34,13 @@ class WTUser(db.Model):
 
     def is_anonymous(self):
         return False
+
+    def update_password(self, new_password):
+        hash, salt = auth_utils.encode_password(new_password)
+        self.password = hash
+        self.salt = salt
+        self.put()
+        return
 
     @classmethod
     def get_user_by_facebook_id(cls, facebook_id):

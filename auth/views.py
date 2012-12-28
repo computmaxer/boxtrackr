@@ -1,6 +1,8 @@
 import json
+import logging
 
 import auth
+from auth import UserAwareView
 from auth import forms as auth_forms
 from auth import utils as auth_utils
 from auth import models as auth_models
@@ -46,7 +48,7 @@ google = oauth.remote_app('google',
                           consumer_secret=settings.GOOGLE_SECRET)
 
 
-class Register(auth.UserAwareView):
+class Register(UserAwareView):
     def get(self):
         context = self.get_context()
         context['form'] = auth_forms.SignupForm()
@@ -71,7 +73,7 @@ class Register(auth.UserAwareView):
                 if new_user:
                     registered = True
 
-                    subject = "Welcome to Web Tournaments"
+                    subject = "Welcome to BoxTrackr"
                     body = mail.generate_email_body("email/auth/registration_email.html",
                                                     username=new_user.username)
 
@@ -89,7 +91,7 @@ class Register(auth.UserAwareView):
         return response
 
 
-class Login(auth.UserAwareView):
+class Login(UserAwareView):
     def get(self):
         context = self.get_context(form = auth_forms.LoginForm())
         return render_template("auth/login.html", **context)
@@ -123,8 +125,84 @@ class Login(auth.UserAwareView):
         return response
 
 
+class ForgotPassword(auth.UserAwareView):
+    def get(self):
+        context = self.get_context()
+        context['form'] = auth_forms.PasswordForgotForm()
+        return render_template('auth/forgot_password.html', **context)
 
-class Logout(auth.UserAwareView):
+    def post(self):
+        form = auth_forms.PasswordForgotForm(request.form)
+
+        if form.validate():
+            user = auth_models.WTUser.get_user_by_email(form.email.data)
+            if not user:
+                logging.debug("No user found for email: %s" % form.email.data)
+                return json.dumps({'error': 'Email not found'})
+
+            logging.debug("Sending password reset email to %s" % user.email)
+            server = request.environ['HTTP_ORIGIN']
+            auth_utils.send_reset_email(server, user)
+            return redirect(url_for('reset_email_sent'))
+
+        return json.dumps({'error': 'Invalid form'})
+
+
+class ResetPassword(auth.UserAwareView):
+    def get(self):
+        token = request.args.get('token', None)
+        context = self.get_context()
+
+        if not token:
+            return json.dumps({'error': 'Missing token.'})
+
+        valid = auth_utils.validate_token(token)
+        if not valid:
+            return json.dumps({'error': 'Invalid token.'})
+
+        context['token'] = token
+        context['form'] = auth_forms.PasswordResetForm()
+        return render_template('auth/reset_password.html', **context)
+
+    def post(self):
+        form = auth_forms.PasswordResetForm(request.form)
+        context = self.get_context()
+
+        if form.validate():
+            token = form.token.data
+            if not token:
+                context['form'] = auth_forms.PasswordForgotForm()
+                return render_template('home.html', **context)
+
+            email = auth_utils.validate_token(token)
+
+            if not email:
+                return json.dumps({'error': 'invalid token'})
+
+            user = auth_models.WTUser.get_user_by_email(email)
+            logging.warning(user)
+            if user:
+                logging.info("Password reset for %s" % user.email)
+                user.update_password(form.password.data)
+
+            return redirect(url_for('reset_password_success'))
+
+        return str(form.errors)
+
+
+class ResetEmailSent(UserAwareView):
+    def get(self):
+        context = self.get_context()
+        return render_template('auth/password_reset_email_sent.html', **context)
+
+
+class ResetPasswordSuccess(UserAwareView):
+    def get(self):
+        context = self.get_context()
+        return render_template('auth/password_reset_success.html', **context)
+
+
+class Logout(UserAwareView):
     decorators = [login_required]
 
     def get(self):
@@ -132,7 +210,7 @@ class Logout(auth.UserAwareView):
         return redirect('/auth/login')
 
 
-class check_username(auth.UserAwareView):
+class check_username(UserAwareView):
     def get(self):
         username = request.args.get('username', None)
 
@@ -144,17 +222,16 @@ class check_username(auth.UserAwareView):
 
         return json.dumps(output)
 
-class Welcome(auth.UserAwareView):
+class Welcome(UserAwareView):
     def get(self):
         context = self.get_context()
         return render_template('auth/welcome.html', **context)
 
 
-#
 # OAuth views
-#
+######################################
 
-class FacebookLogin(auth.UserAwareView):
+class FacebookLogin(UserAwareView):
 
     def get(self):
         return facebook.authorize(callback=url_for('facebook_authorized',
@@ -162,7 +239,7 @@ class FacebookLogin(auth.UserAwareView):
                                                    _external=True))
 
 
-class GoogleLogin(auth.UserAwareView):
+class GoogleLogin(UserAwareView):
 
     def get(self):
         callback=url_for('google_authorized', _external=True)
@@ -173,7 +250,7 @@ def get_facebook_oauth_token():
     return session.get('oauth_token'), settings.FACEBOOK_APP_SECRET
 
 
-class FacebookAuthorized(auth.UserAwareView):
+class FacebookAuthorized(UserAwareView):
 
     @facebook.authorized_handler
     def get(self, other):
@@ -202,7 +279,7 @@ class FacebookAuthorized(auth.UserAwareView):
 
 
 
-class GoogleAuthorized(auth.UserAwareView):
+class GoogleAuthorized(UserAwareView):
 
     @google.authorized_handler
     def get(self, other):
