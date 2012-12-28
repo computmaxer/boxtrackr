@@ -123,13 +123,6 @@ class Login(auth.UserAwareView):
         return response
 
 
-class PasswordReset(auth.UserAwareView):
-    def get(self):
-        context = self.get_context(form = auth_forms.PasswordResetForm())
-        return render_template("auth/password_reset.html", **context)
-
-class ForgotPassword(auth.UserAwareView)
-
 
 class Logout(auth.UserAwareView):
     decorators = [login_required]
