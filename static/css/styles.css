@@ -1120,3 +1120,7 @@ figure {
     font-size: 13px;
     width: 250px;
 }
+
+.forgot_password_link {
+    text-align: center;
+}
