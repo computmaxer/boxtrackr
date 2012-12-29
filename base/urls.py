@@ -5,7 +5,6 @@ import logging
 
 def setup_urls(app):
     """URLs for the base module"""
-    app.add_url_rule('/', view_func=base_views.MainHandler.as_view('home'))
 
     @app.errorhandler(404)
     def page_not_found(e):
