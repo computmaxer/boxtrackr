@@ -183,7 +183,7 @@ class ResetPassword(auth.UserAwareView):
             token = form.token.data
             if not token:
                 context['form'] = auth_forms.PasswordForgotForm()
-                return render_template('home.html', **context)
+                return redirect(url_for('home'))
 
             email = auth_utils.validate_token(token)
 
