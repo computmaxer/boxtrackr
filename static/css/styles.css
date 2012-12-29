@@ -1066,13 +1066,18 @@ figure {
 
 .package-list .header {
     height: 50px;
-    background-color: #999999;
-    background-image: linear-gradient(to bottom, #AAAAAA, #777777);
+    background-color: #5BC0DE;
+    /*background-image: linear-gradient(to bottom, #AAAAAA, #777777);*/
+    background-image: linear-gradient(to bottom, #5BC0DE, #2F96B4);
     border-radius: 5px 5px 0px 0px;
     padding: 10px;
 
     color: #FFFFFF;
     font-weight: bold;
+}
+
+.package-list .header .btn-text {
+    display: none;
 }
 
 .package {

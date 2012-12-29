@@ -16,7 +16,7 @@
             <div class="package-list">
                 <div class="header">
                     <div class="packages-summary">You have {{ num_packages }} packages.</div>
-                    <a id="add-package-button" href="#add-package-modal" class="btn btn-info pull-right" style="margin-top: 6px;" role="button" data-toggle="modal"><i class="icon-plus-sign"></i>&nbsp; Add Package</a>
+                    <a id="add-package-button" href="#add-package-modal" class="btn pull-right" style="margin-top: 6px;margin-right: 5px;text-align:left;font-weight:normal;" role="button" data-toggle="modal"><i class="icon-plus"></i><span class="btn-text">&nbsp; Add Package</span></a>
                 </div>
             {% for package in packages %}
                 <div id="package-{{ package.key() }}" class="package{% if loop.last %} last{% endif %}">
@@ -70,6 +70,21 @@
         {% if add_package_open %}
             $('#add-package-button').trigger('click');
         {% endif %}
+            $("#add-package-button").hover(function(){
+                var that = $(this);
+                that.stop();
+                that.animate({width: 106}, 250, function(){
+                    that.find('.btn-text').fadeIn(150);
+                });
+            }, function(){
+                var that = $(this);
+                that.stop();
+                $('.btn-text', this).fadeOut(150, function(){
+                    that.animate({width: 10}, 250);
+                });
+
+            });
+
         });
 
     </script>
