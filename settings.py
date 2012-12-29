@@ -9,6 +9,9 @@ SECRET_KEY = 'dev_key_h8hfne89vm'
 CSRF_ENABLED = True
 CSRF_SESSION_LKEY = 'dev_key_h8asSNJ9s9=+'
 
+# 1 day = 60s * 60m * 24h = 86400
+TOKEN_SIGNING_TIMELIMIT = 86400
+
 MEDIA_MERGED = True
 
 UPS_API_USERNAME = 'username'

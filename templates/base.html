@@ -86,6 +86,16 @@
                                 </ul>
                             </li>
                         {% endif %}
+{#                            <li class='active'><a href="{{ url_for('home') }}">Home</a></li>#}
+{##}
+{#                        {% if not user %}#}
+{#                            <li class=''><a href="{{ url_for('register') }}">Register</a></li>#}
+{#                            <li class=''><a href="{{ url_for('login') }}">Login</a></li>#}
+{##}
+{#                        {% else %}#}
+{#                                <li class=''><a href="{{ url_for('package-list') }}">Package List</a></li>#}
+{#                                <li class=''><a href="{{ url_for('logout') }}">Logout</a></li>#}
+{#                        {% endif %}#}
                         </ul>
                     </div>
                 </div>
@@ -133,50 +143,20 @@
                 that.append($(idInput));
             });
 
-            // Ajax request for login
-            function login() {
-                $.post("/auth/login/", $("#nav_login").serialize(),
-                        function(responseText)
-                        {
-                            var data = $.parseJSON(responseText);
-                            if (data.loggedin) {
-                                window.location.reload();
-                            }
-
-                            // Showing errors in the login dropdown
-                            if (data.error_message) {
-                                var message_div = $("#login_message")
-                                message_div.html(data.error_message);
-                                message_div.show()
-                            }
-
-                        });
-            }
-
             // Calling the login function when the "Sign in" button is clicked
             $("#sign-in").click(function() {
                 login();
             });
 
             // Calling the login function when enter is pressed
-            $("#nav_login").keypress(function(e) {
-                if (e && e.which == 13) {
-                    login();
-                }
-            });
+
 
             // Setting focus on the email field when the dropdown is opened
             $("#login_dropdown").click(function () {
                 setTimeout('$("#dropdown_email").focus()', 200);
             });
 
-            $("#sign-in-facebook").click(function() {
-                window.location.replace("/auth/facebook_login")
-            })
 
-            $("#sign-in-google").click(function() {
-                window.location.replace("/auth/google_login ")
-            })
 
         });
     </script>
