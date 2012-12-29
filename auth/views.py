@@ -115,7 +115,7 @@ class Login(UserAwareView):
         else:
             message = "Invalid Email / Password"
 
-        next_url = '/tournament/list'
+        next_url = '/shipping/package_list'
         response = json.dumps(
             {
                 'loggedin': authorized,
@@ -133,19 +133,26 @@ class ForgotPassword(auth.UserAwareView):
 
     def post(self):
         form = auth_forms.PasswordForgotForm(request.form)
+        response = {
+            'error_message':    None,
+            'email_sent':       False,
+        }
 
         if form.validate():
             user = auth_models.WTUser.get_user_by_email(form.email.data)
             if not user:
                 logging.debug("No user found for email: %s" % form.email.data)
-                return json.dumps({'error': 'Email not found'})
+                response['error_message'] = 'Email not found'
+                return json.dumps(response)
 
             logging.debug("Sending password reset email to %s" % user.email)
-            server = request.environ['HTTP_ORIGIN']
+            server = request.environ['HTTP_HOST']
             auth_utils.send_reset_email(server, user)
-            return redirect(url_for('reset_email_sent'))
 
-        return json.dumps({'error': 'Invalid form'})
+            response['email_sent'] = True
+            return json.dumps(response)
+
+        return json.dumps(response)
 
 
 class ResetPassword(auth.UserAwareView):
@@ -167,6 +174,10 @@ class ResetPassword(auth.UserAwareView):
     def post(self):
         form = auth_forms.PasswordResetForm(request.form)
         context = self.get_context()
+        response = {
+            'error_message':    None,
+            'was_successful':   False,
+        }
 
         if form.validate():
             token = form.token.data
@@ -177,17 +188,18 @@ class ResetPassword(auth.UserAwareView):
             email = auth_utils.validate_token(token)
 
             if not email:
-                return json.dumps({'error': 'invalid token'})
+                response['error_message'] = 'Invalid token.'
+                return json.dumps(response)
 
             user = auth_models.WTUser.get_user_by_email(email)
-            logging.warning(user)
             if user:
                 logging.info("Password reset for %s" % user.email)
                 user.update_password(form.password.data)
 
-            return redirect(url_for('reset_password_success'))
+            response['was_successful'] = True
+            return json.dumps(response)
 
-        return str(form.errors)
+        return json.dumps(response)
 
 
 class ResetEmailSent(UserAwareView):
