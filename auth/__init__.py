@@ -1,7 +1,7 @@
 import auth
 from auth import models as auth_models
 
-from base import BaseMultiMethodView
+from base.views import BaseMultiMethodView
 
 from flask import session, redirect, url_for
 

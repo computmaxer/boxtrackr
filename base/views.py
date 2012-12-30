@@ -1,20 +1,16 @@
-from flask import request, redirect, url_for, jsonify
-from flask.templating import render_template
-
-from auth import UserAwareView
+from flask import request, redirect, abort
+from flask.views import MethodView
 
 
-class MainHandler(UserAwareView):
-    active_nav = 'home'
+class BaseMultiMethodView(MethodView):
+    active_nav = None
 
-    def get(self):
-        context = self.get_context()
-
-        context['remove_header'] = True
-
-        if self.user:
-            context['username'] = self.user.username
-
-        context['login_mode'] = request.args.get('login_mode', None)
-
-        return render_template('home.html', **context)
+    def post(self):
+        id = request.form.get('id', None)
+        if id:
+            attr = getattr(self, 'post_%s' % id, None)
+            if attr and callable(attr):
+                response = attr()
+                if response:
+                    return response
+        return abort(404, "Post method not found on view.")

@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, redirect, url_for
 from flask.templating import render_template
 
 from flask_login import login_required
@@ -7,6 +7,20 @@ from shipping import api, forms, actions
 
 import auth
 import logging
+
+
+class MainHandler(auth.UserAwareView):
+    active_nav = 'home'
+
+    def get(self):
+        context = self.get_context()
+        context['remove_header'] = True
+
+        if self.user and request.path != '/home/':
+            return redirect(url_for('package-list'))
+
+        context['login_mode'] = request.args.get('login_mode', None)
+        return render_template('home.html', **context)
 
 
 class PackagesListView(auth.UserAwareView):
