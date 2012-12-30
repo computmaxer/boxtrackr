@@ -1064,6 +1064,13 @@ figure {
     display: inline-block;
 }
 
+#add-package-button {
+    margin-top: 6px;
+    margin-right: 5px;
+    text-align:left;
+    font-weight:normal;
+}
+
 .package-list {
     width: 100%;
     background-color: #FEFEFE;
