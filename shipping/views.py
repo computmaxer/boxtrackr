@@ -40,3 +40,19 @@ class PackagesListView(auth.UserAwareView):
             actions.create_package(form.data, self.user)
             return self.get()
         return self.get(form)
+
+    def post_edit_package(self):
+        package_key = request.form.get('package-key')
+        package = actions.get_package(package_key)
+        form = forms.AddPackageForm(request.form)
+        if form.validate():
+            actions.edit_package(package, form.data)
+            return self.get()
+        return self.get(form)
+
+    def post_delete_package(self):
+        package_key = request.form.get('package-key')
+        package = actions.get_package(package_key)
+        actions.delete_package(package, self.user)
+        #TODO: Notify user if delete fails.
+        return self.get()

@@ -12,6 +12,7 @@ import settings
 import logging
 
 
+API_UNAVAILABLE = -3
 INVALID_NUMBER = -2
 NO_INFO = -1
 RECEIVED_NOTICE = 0
@@ -20,6 +21,7 @@ OUT_FOR_DELIVERY = 2
 DELIVERED = 3
 
 STATUS_LIST = [(INVALID_NUMBER, "Invalid Tracking Number"),
+               (API_UNAVAILABLE, "Carrier service unavailable"),
                (NO_INFO, "Carrier has no information"),
                (RECEIVED_NOTICE, "Carrier has been notified of the shipment"),
                (IN_TRANSIT, "In Transit"),
@@ -27,6 +29,7 @@ STATUS_LIST = [(INVALID_NUMBER, "Invalid Tracking Number"),
                (DELIVERED, "Delivered")
 ]
 STATUS_DICT = {
+    API_UNAVAILABLE: "Carrier service unavailable",
     INVALID_NUMBER: "Invalid Tracking Number",
     NO_INFO: "Carrier has no information",
     RECEIVED_NOTICE: "Carrier has been notified of the shipment",
@@ -54,7 +57,7 @@ def query_tracking(tracking_number):
     :param tracking_number: The tracking number to query for.
     :return: The result list from the API function if the query was successful.
     """
-    logging.info("Querying tracking API")
+    logging.info("Querying tracking API.  Tracking number: %s" % tracking_number)
     carrier = determine_carrier(tracking_number)
     this = sys.modules[__name__]
     method = getattr(this, "query_%s_tracking" % carrier)
@@ -114,7 +117,12 @@ def _parse_ups_tracking_response_xml(root):
         error = response.find('Error').find('ErrorDescription')
         if error.text == "Invalid tracking number":
             shipments = []
-            packages = [{'status': INVALID_NUMBER,}]
+            packages = [{'status': INVALID_NUMBER}]
+            shipments.append(packages)
+            return shipments
+        elif error.text == "Tracking service unavailable":
+            shipments = []
+            packages = [{'status': API_UNAVAILABLE}]
             shipments.append(packages)
             return shipments
         else:

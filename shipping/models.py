@@ -6,8 +6,9 @@ from auth import models as auth_models
 from shipping import api as shapi
 
 import datetime
-
 import logging
+
+
 class Package(db.Model, base_models.Timestamped):
     name = db.StringProperty()                   # Name this package
     tracking_number = db.StringProperty()        # Tracking number on the shipment
@@ -20,6 +21,8 @@ class Package(db.Model, base_models.Timestamped):
     last_checked = db.DateTimeProperty()
     estimated_arrival = db.DateTimeProperty()
     status = db.IntegerProperty()
+
+    UPDATE_INTERVAL_MINUTES = 30
 
     #Possible example of a get helper TODO: Finish this.
     def get_estimated_arrival(self):
@@ -55,4 +58,4 @@ class Package(db.Model, base_models.Timestamped):
 
     @property
     def api_update_time(self):
-        return datetime.datetime.now() - datetime.timedelta(minutes=30)
+        return datetime.datetime.now() - datetime.timedelta(minutes=self.UPDATE_INTERVAL_MINUTES)

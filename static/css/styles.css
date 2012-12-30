@@ -22,6 +22,15 @@ a.hover-link:hover {
     text-decoration: underline;
 }
 
+.decorated {
+    text-decoration: underline;
+}
+
+/* Colors */
+.color-delete{
+    color: #BB0000;
+}
+
 #style-switcher {
     position: absolute;
     right: 100px;
@@ -1055,6 +1064,13 @@ figure {
     display: inline-block;
 }
 
+#add-package-button {
+    margin-top: 6px;
+    margin-right: 5px;
+    text-align:left;
+    font-weight:normal;
+}
+
 .package-list {
     width: 100%;
     background-color: #FEFEFE;
@@ -1066,13 +1082,21 @@ figure {
 
 .package-list .header {
     height: 50px;
-    background-color: #999999;
-    background-image: linear-gradient(to bottom, #AAAAAA, #777777);
+    background-color: #5BC0DE;
+    /*background-image: linear-gradient(to bottom, #AAAAAA, #777777);*/
+    background-image: linear-gradient(to bottom, #5BC0DE, #2F96B4);
     border-radius: 5px 5px 0px 0px;
     padding: 10px;
-
+    box-shadow: 0 3px 5px 0 #CCCCCC;
     color: #FFFFFF;
     font-weight: bold;
+}
+
+.package-list .header .btn-text {
+    display: none;
+}
+
+.packages {
 }
 
 .package {
@@ -1085,6 +1109,11 @@ figure {
 
 .package .summary {
     padding: 10px;
+}
+
+.package .summary:hover {
+    background-color: #DEF2F8;
+    cursor: pointer;
 }
 
 .package .summary .name {
@@ -1114,6 +1143,26 @@ figure {
     display: inline-block;
     font-size: 13px;
     width: 250px;
+}
+
+.package .details {
+    display: none;
+    padding: 10px;
+    box-shadow: 0 0 4px 1px #D1D1D1 inset;
+    background-color: #FAFAFA;
+}
+
+.package .details .actions {
+    float: right;
+    padding-right: 5px;
+}
+
+.package .details .actions .edit {
+    color: #333333;
+}
+
+.modal-body .package-name {
+    font-weight: bold;
 }
 
 .forgot_password_link {
