@@ -18,30 +18,34 @@
                     <div class="packages-summary">You have {{ num_packages }} packages.</div>
                     <a id="add-package-button" href="#add-package-modal" class="btn pull-right" style="margin-top: 6px;margin-right: 5px;text-align:left;font-weight:normal;" role="button" data-toggle="modal"><i class="icon-plus"></i><span class="btn-text">&nbsp; Add Package</span></a>
                 </div>
-            {% for package in packages %}
-                <div id="package-{{ package.key() }}" class="package{% if loop.last %} last{% endif %}">
-                    <div class="summary">
-                        <div class="summary-row">
-                            <div class="name">{{ package.name }}</div>
-                            <div class="site">{{ package.site }}</div>
-                            <div class="status">{{ package.STATUS_TEXT }}</div>
-                        </div>
-                        <div class="summary-row">
-                            <div class="tracking-number">
-                                <a href="#" class="hover-link" target="_blank" title="Open tracking information on carrier's website.">
-                                    {{ package.tracking_number }}
-                                </a>
+                <div class="packages">
+                {% for package in packages %}
+                    <div id="package-{{ package.key() }}" class="package{% if loop.last %} last{% endif %}">
+                        <div class="summary">
+                            <div class="summary-row">
+                                <div class="name">{{ package.name }}</div>
+                                <div class="site">{{ package.site }}</div>
+                                <div class="status">{{ package.STATUS_TEXT }}</div>
                             </div>
-                            <div class="description">{{ package.description }}</div>
+                            <div class="summary-row">
+                                <div class="tracking-number">
+                                    <a href="#" class="hover-link tracking-number-link" target="_blank" title="Open tracking information on carrier's website.">
+                                        {{ package.tracking_number }}
+                                    </a>
+                                </div>
+                                <div class="description">{{ package.description }}</div>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <p>Test</p>
+                            <p>Test</p>
+                            <p>Test</p>
                         </div>
                     </div>
-                    <div class="details">
-
-                    </div>
+                {% else %}
+                    <span>There are no package here!</span>
+                {% endfor %}
                 </div>
-            {% else %}
-                <span>There are no package here!</span>
-            {% endfor %}
             </div>
 
         </div>
@@ -84,6 +88,23 @@
                 });
 
             });
+
+            $('.package > .summary').hover(function(){
+                $(".name", this).css('text-decoration', 'underline');
+            },function(){
+                $(".name", this).css('text-decoration', 'none');
+            });
+
+            $('.package > .summary').click(function(){
+                var detail = $(this).siblings('.details');
+                $('.details').not(detail).slideUp(200);
+                detail.slideToggle(200);
+            });
+
+            //Prevent the details from opening when clicking on the tracking number link.
+{#            $('.tracking-number-link').click(function(){#}
+{#                $(this).stopPropagation();#}
+{#            });#}
 
         });
 

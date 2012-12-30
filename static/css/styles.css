@@ -1071,13 +1071,16 @@ figure {
     background-image: linear-gradient(to bottom, #5BC0DE, #2F96B4);
     border-radius: 5px 5px 0px 0px;
     padding: 10px;
-
+    box-shadow: 0 3px 5px 0 #CCCCCC;
     color: #FFFFFF;
     font-weight: bold;
 }
 
 .package-list .header .btn-text {
     display: none;
+}
+
+.packages {
 }
 
 .package {
@@ -1090,6 +1093,11 @@ figure {
 
 .package .summary {
     padding: 10px;
+}
+
+.package .summary:hover {
+    background-color: #DEF2F8;
+    cursor: pointer;
 }
 
 .package .summary .name {
@@ -1119,6 +1127,13 @@ figure {
     display: inline-block;
     font-size: 13px;
     width: 250px;
+}
+
+.package .details {
+    display: none;
+    padding: 10px;
+    box-shadow: 0 0 4px 1px #D1D1D1 inset;
+    background-color: #FAFAFA;
 }
 
 .forgot_password_link {
