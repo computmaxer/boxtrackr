@@ -37,6 +37,17 @@
                             </div>
                         </div>
                         <div class="details">
+                            <div class="actions">
+                                <a class="edit" title="Edit package" data-toggle="modal" role="button" href="#edit-package-modal" data-packagekey="{{ package.key() }}"
+                                   data-trackingnumber="{{ package.tracking_number }}" data-name="{{ package.name }}"
+                                   data-site="{{ package.site }}" data-description="{{ package.description }}">
+                                    <i class="icon-pencil" style="padding-right: 10px;"></i>
+                                </a>
+                                <a class="remove" title="Delete package" data-toggle="modal" role="button" href="#delete-package-modal"
+                                   data-packagekey="{{ package.key() }}" data-name="{{ package.name }}">
+                                    <i class="icon-remove color-delete"></i>
+                                </a>
+                            </div>
                             <p>Test</p>
                             <p>Test</p>
                             <p>Test</p>
@@ -54,16 +65,48 @@
     <div class="modal" id="add-package-modal" tabindex="-1" role="dialog" aria-labelledby="add-package-modal" aria-hidden="true" style="display: none;">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Add Package</h3>
+            <h3 id="addModalLabel">Add Package</h3>
         </div>
         <form id="add_package" class="form-horizontal modal-form" action='' method="POST">
             <div class="modal-body">
-                <div>
-                    {{ render_form(form) }}
-                </div>
+                {{ render_form(form) }}
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-info" value="Submit" />
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="edit-package-modal" tabindex="-1" role="dialog" aria-labelledby="edit-package-modal" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="editModalLabel">Edit Package</h3>
+        </div>
+        <form id="edit_package" class="form-horizontal modal-form" action='' method="POST">
+            <div class="modal-body">
+                {{ render_form(form) }}
+                <input type="hidden" class="package-key" name="package-key" value="" />
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-info" value="Submit" />
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="delete-package-modal" tabindex="-1" role="dialog" aria-labelledby="delete-package-modal" aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="deleteModalLabel">Delete Package</h3>
+        </div>
+        <form id="delete_package" class="form-horizontal modal-form" action='' method="POST">
+            <div class="modal-body">
+                Are you sure you want to delete "<span class="package-name"></span>"? &nbsp;This cannot be undone.
+                <input type="hidden" class="package-key" name="package-key" value="" />
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-danger" value="Delete Package" />
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </form>
@@ -90,12 +133,10 @@
             });
 
             $('.package > .summary').hover(function(){
-                $(".name", this).css('text-decoration', 'underline');
+                $(".name", this).addClass('decorated');
             },function(){
-                $(".name", this).css('text-decoration', 'none');
-            });
-
-            $('.package > .summary').click(function(){
+                $(".name", this).removeClass('decorated');
+            }).click(function(){
                 var detail = $(this).siblings('.details');
                 $('.details').not(detail).slideUp(200);
                 detail.slideToggle(200);
@@ -106,6 +147,28 @@
 {#                $(this).stopPropagation();#}
 {#            });#}
 
+            //Setup the edit modal to fill the form values when it opens.
+            $('#edit-package-modal').on('show', function(event){
+                var data = $(this).data('modal').options;
+
+                $('#name', this).val(data.name);
+                $('#tracking_number', this).val(data.trackingnumber);
+                $('#site', this).val(data.site);
+                $('#description', this).val(data.description);
+                $('.package-key', this).val(data.packagekey);
+            }).on('hide', function(event){
+                $(this).removeData('modal');
+            });
+
+            //Setup the edit modal to fill the form values when it opens.
+            $('#delete-package-modal').on('show', function(event){
+                var data = $(this).data('modal').options;
+
+                $('.package-name', this).html(data.name);
+                $('.package-key', this).val(data.packagekey);
+            }).on('hide', function(event){
+                $(this).removeData('modal');
+            });
         });
 
     </script>

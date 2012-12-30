@@ -22,6 +22,15 @@ a.hover-link:hover {
     text-decoration: underline;
 }
 
+.decorated {
+    text-decoration: underline;
+}
+
+/* Colors */
+.color-delete{
+    color: #BB0000;
+}
+
 #style-switcher {
     position: absolute;
     right: 100px;
@@ -1134,6 +1143,19 @@ figure {
     padding: 10px;
     box-shadow: 0 0 4px 1px #D1D1D1 inset;
     background-color: #FAFAFA;
+}
+
+.package .details .actions {
+    float: right;
+    padding-right: 5px;
+}
+
+.package .details .actions .edit {
+    color: #333333;
+}
+
+.modal-body .package-name {
+    font-weight: bold;
 }
 
 .forgot_password_link {
