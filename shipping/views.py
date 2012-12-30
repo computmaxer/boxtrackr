@@ -6,6 +6,7 @@ from flask_login import login_required
 from shipping import api, forms, actions
 
 import auth
+import json
 import logging
 
 
@@ -56,3 +57,11 @@ class PackagesListView(auth.UserAwareView):
         actions.delete_package(package, self.user)
         #TODO: Notify user if delete fails.
         return self.get()
+
+    def post_refresh_package(self):
+        package_key = request.form.get('key')
+        package = actions.get_package(package_key)
+        package.update_values_from_api()
+        setattr(package, 'STATUS_TEXT', package.get_status_text())
+        row = render_template("shipping/package_row.html", **{'package': package})
+        return json.dumps({'key': package_key, 'row': row})

@@ -13,4 +13,5 @@ class BaseMultiMethodView(MethodView):
                 response = attr()
                 if response:
                     return response
+                return abort(500, "Post method did not return a response.")
         return abort(404, "Post method not found on view.")

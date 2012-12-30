@@ -1,0 +1,35 @@
+<div class="summary">
+    <div class="summary-row">
+        <div class="name">{{ package.name }}</div>
+        <div class="site">{{ package.site }}</div>
+        <div class="status">{{ package.STATUS_TEXT }}</div>
+    </div>
+    <div class="summary-row">
+        <div class="tracking-number">
+            <a href="#" class="hover-link tracking-number-link" target="_blank" title="Open tracking information on carrier's website.">
+                {{ package.tracking_number }}
+            </a>
+        </div>
+        <div class="description">{{ package.description }}</div>
+    </div>
+</div>
+<div class="details">
+    <div class="actions">
+        <a class="refresh" title="Refresh status" data-packagekey="{{ package.key() }}">
+            <i class="icon-refresh" style="padding-right: 10px;"></i>
+            <img src="/static/img/throbber.gif" width="16px" height="16px" style="display: none;padding-right: 10px;">
+        </a>
+        <a class="edit" title="Edit package" data-toggle="modal" role="button" href="#edit-package-modal" data-packagekey="{{ package.key() }}"
+           data-trackingnumber="{{ package.tracking_number }}" data-name="{{ package.name }}"
+           data-site="{{ package.site }}" data-description="{{ package.description }}">
+            <i class="icon-pencil" style="padding-right: 10px;"></i>
+        </a>
+        <a class="remove" title="Delete package" data-toggle="modal" role="button" href="#delete-package-modal"
+           data-packagekey="{{ package.key() }}" data-name="{{ package.name }}">
+            <i class="icon-remove color-delete"></i>
+        </a>
+    </div>
+    <p><i>Last Updated:</i> {{ package.last_checked }}</p>
+    <p>Test</p>
+    <p>Test</p>
+</div>

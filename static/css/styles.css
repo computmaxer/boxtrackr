@@ -12,6 +12,10 @@
     padding-left: 2px;
 }
 
+.preload {
+    display: none;
+}
+
 /* hover links - links that become underlined when you hover */
 a.hover-link {
     text-decoration: no-underline;
@@ -1164,6 +1168,10 @@ figure {
 
 .package .details .actions .edit {
     color: #333333;
+}
+
+.package .details .actions .refresh {
+    cursor: pointer;
 }
 
 .modal-body .package-name {
