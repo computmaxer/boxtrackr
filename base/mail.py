@@ -8,7 +8,8 @@ def send_email(email, subject, body):
     import logging
     logging.warning(body)
 
-    sender="Web Tournament Support <webtournaments@gmail.com>"
+    #TODO: Get @boxtrackr.com email set up and use one of those emails
+    sender="Michael Davis <mike.philip.davis@gmail.com>"
     deferred.defer(mail.send_mail, sender=sender, to=email, subject=subject, body=body)
 
 
