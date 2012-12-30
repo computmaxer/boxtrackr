@@ -30,43 +30,43 @@
 
     $(document).ready(function(){
 
-        $("#username").blur(function () {
-            $('#username-confirm').css('color', '#ffffff');
-            $("#username_text").text("");
-            if ($("#username").val().length > 0) {
-                var page = "/auth/check_username?";
-                var output;
-                $.getJSON(page,
-                    {
-                      username: $("#username").val()
-                    },
-                    function(data) {
-
-                        if (data.valid) {
-                            $('#username-confirm').css('color', '#209920');
-                            $("#username_control").removeClass("error").addClass("success");
-                            $("#username_text").text("Available");
-
-                        } else {
-                            $('#username-confirm').css('color', '#ffffff');
-                            $("#username_control").removeClass("success").addClass("error");
-                            $("#username_text").text("Unavailable");
-                        }
-                    })
-            }
-        })
-
-        $("#password_confirm").blur(function() {
-            if ($("#password").val() == $("#password_confirm").val()) {
-                $("#password-confirm").css('color', '#209920');
-                $("#password_confirm_control").removeClass("error").addClass("success");
-                $("#password_confirm_text").text("Passwords match!");
-            } else {
-                $("#password-confirm").css('color', '#ffffff');
-                $("#password_confirm_control").removeClass("success").addClass("error");
-                $("#password_confirm_text").text("Passwords don't match!");
-            }
-        });
+{#        $("#username").blur(function () {#}
+{#            $('#username-confirm').css('color', '#ffffff');#}
+{#            $("#username_text").text("");#}
+{#            if ($("#username").val().length > 0) {#}
+{#                var page = "/auth/check_username/?";#}
+{#                var output;#}
+{#                $.getJSON(page,#}
+{#                    {#}
+{#                      username: $("#username").val()#}
+{#                    },#}
+{#                    function(data) {#}
+{##}
+{#                        if (data.valid) {#}
+{#                            $('#username-confirm').css('color', '#209920');#}
+{#                            $("#username_control").removeClass("error").addClass("success");#}
+{#                            $("#username_text").text("Available");#}
+{##}
+{#                        } else {#}
+{#                            $('#username-confirm').css('color', '#ffffff');#}
+{#                            $("#username_control").removeClass("success").addClass("error");#}
+{#                            $("#username_text").text("Unavailable");#}
+{#                        }#}
+{#                    })#}
+{#            }#}
+{#        })#}
+{##}
+{#        $("#password_confirm").blur(function() {#}
+{#            if ($("#password").val() == $("#password_confirm").val()) {#}
+{#                $("#password-confirm").css('color', '#209920');#}
+{#                $("#password_confirm_control").removeClass("error").addClass("success");#}
+{#                $("#password_confirm_text").text("Passwords match!");#}
+{#            } else {#}
+{#                $("#password-confirm").css('color', '#ffffff');#}
+{#                $("#password_confirm_control").removeClass("success").addClass("error");#}
+{#                $("#password_confirm_text").text("Passwords don't match!");#}
+{#            }#}
+{#        });#}
 
 
 
