@@ -1084,10 +1084,14 @@ figure {
 }
 
 .package-list .header {
-    height: 50px;
     background-color: #5BC0DE;
-    /*background-image: linear-gradient(to bottom, #AAAAAA, #777777);*/
-    background-image: linear-gradient(to bottom, #5BC0DE, #2F96B4);
+    background-image: -ms-linear-gradient(top, #5BC0DE 0%, #2F96B4 100%);
+    background-image: -moz-linear-gradient(top, #5BC0DE 0%, #2F96B4 100%);
+    background-image: -o-linear-gradient(top, #5BC0DE 0%, #2F96B4 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #5BC0DE), color-stop(1, #2F96B4));
+    background-image: -webkit-linear-gradient(top, #5BC0DE 0%, #2F96B4 100%);
+    background-image: linear-gradient(to bottom, #5BC0DE 0%, #2F96B4 100%);
+    height: 50px;
     border-radius: 5px 5px 0px 0px;
     padding: 10px;
     box-shadow: 0 3px 5px 0 #CCCCCC;
