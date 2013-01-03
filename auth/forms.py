@@ -3,7 +3,6 @@ from wtforms import validators
 
 
 class SignupForm(Form):
-    username = TextField('Username', [validators.Required()])
     email = TextField('Email', [validators.Required(), validators.Email()])
     password = PasswordField('Password',
                              [

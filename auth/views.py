@@ -64,8 +64,7 @@ class Register(UserAwareView):
             current_user = auth_models.WTUser.all().filter('email', form.email.data).count()
 
             if not current_user:
-                new_user = auth_models.WTUser(username=form.username.data,
-                                              email=form.email.data,
+                new_user = auth_models.WTUser(email=form.email.data,
                                               password=password,
                                               salt=salt)
                 new_user.save()
@@ -74,8 +73,7 @@ class Register(UserAwareView):
                     registered = True
 
                     subject = "Welcome to BoxTrackr"
-                    body = mail.generate_email_body("email/auth/registration_email.html",
-                                                    username=new_user.username)
+                    body = mail.generate_email_body("email/auth/registration_email.html")
 
                     mail.send_email(new_user.email, subject, body)
 
