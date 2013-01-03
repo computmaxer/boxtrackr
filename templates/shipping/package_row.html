@@ -29,7 +29,7 @@
             <i class="icon-remove color-delete"></i>
         </a>
     </div>
-    <p><i>Last Updated:</i> {{ package.last_checked }}</p>
-    <p>Test</p>
+    <p><i>Last Updated:</i> {{ package.get_last_checked() }}</p>
+    <p><i>Estimated Arrival:</i> {{ package.get_estimated_arrival() }}</p>
     <p>Test</p>
 </div>

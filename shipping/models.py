@@ -24,13 +24,15 @@ class Package(db.Model, base_models.Timestamped):
 
     UPDATE_INTERVAL_MINUTES = 30
 
-    #Possible example of a get helper TODO: Finish this.
     def get_estimated_arrival(self):
-        if self.last_checked < self.api_update_time:
-            #CALL SHIPPING API
-            pass
-        else:
-            return self.estimated_arrival
+        if self.last_checked and self.estimated_arrival:
+            if self.last_checked < self.api_update_time:
+                self.update_values_from_api()
+            return self.estimated_arrival.strftime("%x")
+
+    def get_last_checked(self):
+        if self.last_checked:
+            return self.last_checked.strftime("%m/%d/%y %H:%M:%S")
 
     def get_status(self):
         if not self.last_checked or self.last_checked < self.api_update_time:
@@ -48,8 +50,8 @@ class Package(db.Model, base_models.Timestamped):
             packages = shipments[0]
             if packages:
                 pkg = packages[0]
-                self.status = pkg['status']
-#                self.estimated_arrival =  # TODO: Figure this out
+                self.status = pkg.get('status')
+                self.estimated_arrival = pkg.get('eta')
                 self.last_checked = datetime.datetime.now()
                 self.put()
                 return True
