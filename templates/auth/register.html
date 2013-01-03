@@ -12,7 +12,7 @@
 
                 <form class="form" method="post" action="" id="basic_login_form">
                     {{ form.email(placeholder='Email', style='width: 95%;')|safe }}
-                    {{ form.username(placeholder='Username', style='width: 95%;')|safe }}
+{#                    {{ form.username(placeholder='Username', style='width: 95%;')|safe }}#}
                     {{ form.password(placeholder='Password', style='width: 95%;')|safe }}
                     {{ form.password_confirm(placeholder='Confirm', style='width: 95%')|safe }}
                     <button type="button" class="btn btn-info btn-block" id="submit">Register</button>
@@ -71,7 +71,7 @@
 
 
         $("#submit").click(function() {
-            $.post("/auth/register/", {email: $("#email").val(), username: $("#username").val(), password: $("#password").val(), password_confirm: $("#password_confirm").val()},
+            $.post("/auth/register/", {email: $("#email").val(), password: $("#password").val(), password_confirm: $("#password_confirm").val()},
             function(responseText)
             {
                 var data = $.parseJSON(responseText);
