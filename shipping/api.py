@@ -71,7 +71,8 @@ def _determine_status(status_text):
         return NO_INFO
     elif 'received' in low_text:  # TODO: figure out what this needs to be
         return RECEIVED_NOTICE
-    elif 'transit' in low_text or low_text == 'pu':  # TODO: figure out what this needs to be
+    # TODO: figure out what this needs to be
+    elif 'transit' in low_text or low_text == 'pu' or low_text == 'origin scan':
         return IN_TRANSIT
     elif 'out' in low_text or low_text == 'wc':  # TODO: figure out what this needs to be
         return OUT_FOR_DELIVERY
@@ -101,6 +102,7 @@ def _parse_ups_tracking_response_xml(root):
     if status.text == "Success":
         shipments = []
         for shipment in root.findall('Shipment'):
+            eta = shipment.find('ScheduledDeliveryDate')
             packages = []
             for package in shipment.findall('Package'):
                 activity = package.find('Activity')
@@ -109,6 +111,8 @@ def _parse_ups_tracking_response_xml(root):
                     'tracking_number': package.find('TrackingNumber').text,
                     'status': _determine_status(status_text),
                 }
+                if eta is not None:
+                    info['eta'] = datetime.datetime.strptime(eta.text, "%Y%m%d")
                 #TODO: Add more info to the dict
                 packages.append(info)
             shipments.append(packages)
