@@ -43,7 +43,7 @@
         </div>
         <form id="add_package" class="form-horizontal modal-form" action='' method="POST">
             <div class="modal-body">
-                {{ render_form(form) }}
+                {{ render_form(add_form) }}
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-info" value="Submit" />
@@ -59,7 +59,7 @@
         </div>
         <form id="edit_package" class="form-horizontal modal-form" action='' method="POST">
             <div class="modal-body">
-                {{ render_form(form) }}
+                {{ render_form(edit_form) }}
                 <input type="hidden" class="package-key" name="package-key" value="" />
             </div>
             <div class="modal-footer">
@@ -121,14 +121,42 @@
 {#                $(this).stopPropagation();#}
 {#            });#}
 
+            var addModal = $('#add-package-modal');
+            addModal.find('#AddPackageForm-carrier').parents('.control-group').css('display','none');
+            addModal.on('hide', function(){
+                    $(this).removeData('modal');
+                    $('#AddPackageForm-name', this).val('');
+                    $('#AddPackageForm-tracking_number', this).val('');
+                    $('#AddPackageForm-carrier', this).parents('.control-group').css('display','none');
+                    $('#AddPackageForm-site', this).val('');
+                    $('#AddPackageForm-description', this).val('');
+                })
+                .find('#AddPackageForm-tracking_number')
+                .blur(function(){
+                    $("#tnum_throbber").show();
+                    $.post('#',
+                        {id:"determine_carrier", tracking_number:$(this).val()},
+                        function(data){
+                            $('#add-package-modal').find('#AddPackageForm-carrier')
+                                .val(data.carrier)
+                                .trigger("liszt:updated")
+                                .parents('.control-group').slideDown();
+                            $("#tnum_throbber").hide();
+                        }, "json");
+                })
+                .siblings('.help-inline')
+                .html('<img id="tnum_throbber" style="display:none;" src="/static/img/throbber.gif" width="16px" height="16px">');
+
             //Setup the edit modal to fill the form values when it opens.
             $('#edit-package-modal').on('show', function(event){
                 var data = $(this).data('modal').options;
 
-                $('#name', this).val(data.name);
-                $('#tracking_number', this).val(data.trackingnumber);
-                $('#site', this).val(data.site);
-                $('#description', this).val(data.description);
+                $('#EditPackageForm-name', this).val(data.name);
+                $('#EditPackageForm-tracking_number', this).val(data.trackingnumber);
+                $('#EditPackageForm-carrier', this).val(data.carrier);
+                $('#EditPackageForm-carrier', this).trigger("liszt:updated");
+                $('#EditPackageForm-site', this).val(data.site);
+                $('#EditPackageForm-description', this).val(data.description);
                 $('.package-key', this).val(data.packagekey);
             }).on('hide', function(event){
                 $(this).removeData('modal');
@@ -150,13 +178,11 @@
                 $("img", that).show();
                 $("i", that).hide();
                 $.post('#',
-                        {id:"refresh_package", key:key},
-                        function(data){
-                            $("#package-" + data.key).html(data.row);
-                            $("#package-" + data.key + " > .details").show();
-                        },
-                        "json"
-                );
+                    {id:"refresh_package", key:key},
+                    function(data){
+                        $("#package-" + data.key).html(data.row);
+                        $("#package-" + data.key + " > .details").show();
+                    }, "json");
             });
         });
 

@@ -12,6 +12,7 @@ import logging
 class Package(db.Model, base_models.Timestamped):
     name = db.StringProperty()                   # Name this package
     tracking_number = db.StringProperty()        # Tracking number on the shipment
+    carrier = db.StringProperty()                # Shipping carrier. Determined by us or by user
     site = db.StringProperty()                   # Website/store purchased from
     description = db.StringProperty()            # A field for describing the package
 
@@ -42,7 +43,9 @@ class Package(db.Model, base_models.Timestamped):
         return shapi.STATUS_DICT.get(status, "An error has occured")
 
     def update_values_from_api(self):
-        shipments = shapi.query_tracking(self.tracking_number)
+        if not self.carrier:
+            self.carrier = shapi.determine_carrier(self.tracking_number)
+        shipments = shapi.query_tracking(self.tracking_number, self.carrier)
         if shipments:
             #TODO: Currently only supporting one package/shipment being returned from api.
             packages = shipments[0]

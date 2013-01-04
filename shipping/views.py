@@ -27,10 +27,11 @@ class MainHandler(auth.UserAwareView):
 class PackagesListView(auth.UserAwareView):
     decorators = [login_required]
 
-    def get(self, form=None):
+    def get(self, add_form=None, edit_form=None):
         context = self.get_context()
         context['add_package_open'] = request.args.get('add', None)
-        context['form'] = form or forms.AddPackageForm()
+        context['add_form'] = add_form or forms.AddPackageForm()
+        context['edit_form'] = edit_form or forms.EditPackageForm()
         context['packages'] = actions.get_user_packages(self.user)
         context['num_packages'] = len(context['packages'])
         return render_template('shipping/package_list.html', **context)
@@ -45,11 +46,11 @@ class PackagesListView(auth.UserAwareView):
     def post_edit_package(self):
         package_key = request.form.get('package-key')
         package = actions.get_package(package_key)
-        form = forms.AddPackageForm(request.form)
+        form = forms.EditPackageForm(request.form)
         if form.validate():
             actions.edit_package(package, form.data)
             return self.get()
-        return self.get(form)
+        return self.get(edit_form=form)
 
     def post_delete_package(self):
         package_key = request.form.get('package-key')
@@ -65,3 +66,8 @@ class PackagesListView(auth.UserAwareView):
         setattr(package, 'STATUS_TEXT', package.get_status_text())
         row = render_template("shipping/package_row.html", **{'package': package})
         return json.dumps({'key': package_key, 'row': row})
+
+    def post_determine_carrier(self):
+        tracking_number = request.form.get('tracking_number')
+        carrier = api.determine_carrier(tracking_number)
+        return json.dumps({'carrier': carrier})
