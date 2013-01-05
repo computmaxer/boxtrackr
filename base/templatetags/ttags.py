@@ -39,7 +39,7 @@ def render_hidden_fields(context):
 
 #Form stuff
 @contextfunction
-def render_field(context, field, label=None, single_input=False):
+def render_field(context, field, form_name, label=None, single_input=False):
     #shortcut for hidden fields
     if isinstance(field.widget, wtforms.widgets.HiddenInput):
         return '<li id="li_%(name)s" class="hidden">%(widget)s</li>' % {'name': field.name, 'widget': field.widget}
@@ -57,11 +57,11 @@ def render_field(context, field, label=None, single_input=False):
     for validator in field.validators:
         if isinstance(validator, wtforms.validators.Required):
             is_required = True
-            break;
+            break
     if is_required and field.label:
-        required_indicator =  '<span class="required-indicator" title="This Field is Required">*</span>'
+        required_indicator = '<span class="required-indicator" title="This Field is Required">*</span>'
     else:
-        required_indicator =  '<span class="required-indicator">&nbsp;</span>'
+        required_indicator = '<span class="required-indicator">&nbsp;</span>'
 
     # setup the label
     if field.label:
@@ -77,19 +77,20 @@ def render_field(context, field, label=None, single_input=False):
     if hasattr(field, 'div_attrs'):
         div_attrs = field.div_attrs
 
+    id = "%s-%s" % (form_name, field.name)
     # render the row
     ctx = {
-        'name' : field.name,
+        'name': field.name,
         'label': final_label,
         'classes': ' '.join(classes),
-        'widget': field(),
+        'widget': field(id=id),
         'error': errors,
         'div_attrs': div_attrs,
-        }
+    }
 
-    template='<div class="%(classes)s" %(div_attrs)s><label class="control-label" for="id_%(name)s">%(label)s</label><div class="controls">%(widget)s<span class="help-inline">%(error)s</span></div></div>'
-    checkbox_template='<div class="%(classes)s" %(div_attrs)s><div class="controls"><label class="checkbox">%(widget)s%(label)s</label></div></div>'
-    radio_template='<div class="%(classes)s" %(div_attrs)s><label class="control-label" for="id_%(name)s">%(label)s</label><div class="controls radio">%(widget)s</div></div>'
+    template = '<div class="%(classes)s" %(div_attrs)s><label class="control-label" for="id_%(name)s">%(label)s</label><div class="controls">%(widget)s<span class="help-inline">%(error)s</span></div></div>'
+    checkbox_template = '<div class="%(classes)s" %(div_attrs)s><div class="controls"><label class="checkbox">%(widget)s%(label)s</label></div></div>'
+    radio_template = '<div class="%(classes)s" %(div_attrs)s><label class="control-label" for="id_%(name)s">%(label)s</label><div class="controls radio">%(widget)s</div></div>'
     if isinstance(field.widget, wtforms.widgets.CheckboxInput):
         return Markup(checkbox_template % ctx)
     if isinstance(field, wtforms.RadioField) and isinstance(field.widget, wtforms.widgets.ListWidget):
@@ -112,7 +113,8 @@ def render_form(context, form):
     def get_fields_html(context, form, single_input):
         fields_html = []
         for field in form.__iter__():
-            fields_html.append(render_field(context, field, single_input=single_input))
+            name = form.__class__.__name__
+            fields_html.append(render_field(context, field, name, single_input=single_input))
         return ''.join(fields_html)
 
     errors = render_form_errors_helper(form)

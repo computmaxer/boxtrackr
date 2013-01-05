@@ -38,6 +38,11 @@ STATUS_DICT = {
     DELIVERED: "Delivered",
 }
 
+CARRIER_LIST = [('ups', "UPS"),
+                ('fedex', 'FedEx'),
+                ('usps', 'USPS'),
+                ('dhl', 'DHL')]
+
 
 def determine_carrier(tracking_number):
     #TODO: regex matching to return the proper carrier.
@@ -50,15 +55,17 @@ def determine_carrier(tracking_number):
         return 'usps'
 
 
-def query_tracking(tracking_number):
+def query_tracking(tracking_number, carrier=None):
     """
     Query a tracking number without knowing the carrier.  Function will determine the proper carrier
     based on the tracking number and then call the appropriate shipping API function.
     :param tracking_number: The tracking number to query for.
+    :keyword carrier: Optionally specify the carrier to query.
     :return: The result list from the API function if the query was successful.
     """
-    logging.info("Querying tracking API.  Tracking number: %s" % tracking_number)
-    carrier = determine_carrier(tracking_number)
+    if not carrier:
+        carrier = determine_carrier(tracking_number)
+    logging.info("Querying %s tracking API.  Tracking number: %s" % (carrier, tracking_number))
     this = sys.modules[__name__]
     method = getattr(this, "query_%s_tracking" % carrier)
     return method(tracking_number)
