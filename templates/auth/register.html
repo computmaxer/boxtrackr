@@ -12,7 +12,6 @@
 
                 <form class="form" method="post" action="" id="basic_login_form">
                     {{ form.email(placeholder='Email', style='width: 95%;')|safe }}
-{#                    {{ form.username(placeholder='Username', style='width: 95%;')|safe }}#}
                     {{ form.password(placeholder='Password', style='width: 95%;')|safe }}
                     {{ form.password_confirm(placeholder='Confirm', style='width: 95%')|safe }}
                     <button type="button" class="btn btn-info btn-block" id="submit">Register</button>
@@ -30,65 +29,75 @@
 
     $(document).ready(function(){
 
-{#        $("#username").blur(function () {#}
-{#            $('#username-confirm').css('color', '#ffffff');#}
-{#            $("#username_text").text("");#}
-{#            if ($("#username").val().length > 0) {#}
-{#                var page = "/auth/check_username/?";#}
-{#                var output;#}
-{#                $.getJSON(page,#}
-{#                    {#}
-{#                      username: $("#username").val()#}
-{#                    },#}
-{#                    function(data) {#}
-{##}
-{#                        if (data.valid) {#}
-{#                            $('#username-confirm').css('color', '#209920');#}
-{#                            $("#username_control").removeClass("error").addClass("success");#}
-{#                            $("#username_text").text("Available");#}
-{##}
-{#                        } else {#}
-{#                            $('#username-confirm').css('color', '#ffffff');#}
-{#                            $("#username_control").removeClass("success").addClass("error");#}
-{#                            $("#username_text").text("Unavailable");#}
-{#                        }#}
-{#                    })#}
-{#            }#}
-{#        })#}
-{##}
-{#        $("#password_confirm").blur(function() {#}
-{#            if ($("#password").val() == $("#password_confirm").val()) {#}
-{#                $("#password-confirm").css('color', '#209920');#}
-{#                $("#password_confirm_control").removeClass("error").addClass("success");#}
-{#                $("#password_confirm_text").text("Passwords match!");#}
-{#            } else {#}
-{#                $("#password-confirm").css('color', '#ffffff');#}
-{#                $("#password_confirm_control").removeClass("success").addClass("error");#}
-{#                $("#password_confirm_text").text("Passwords don't match!");#}
-{#            }#}
-{#        });#}
+        var email = $('#email');
+        var pass = $("#password");
+        var conf = $("#password_confirm");
+        var conf_visible = false;
 
+        email.popover({
+            html: true,
+            trigger: 'manual',
+            content: 'An account has already been registered with that email.<br><br><a href="{{ url_for('forgot_password') }}">Forgot password?</a>',
+            title: 'Whoops.'
+        });
 
+        conf.popover({
+            trigger: 'manual',
+            content: 'Your passwords don\'t match.',
+            title: 'Whoops.'
+        });
+
+        function confirm_password() {
+            if (!(pass.val() == conf.val())) {
+                conf_visible = true;
+                conf.popover('show');
+                setTimeout(function() {
+                    conf.popover('hide');
+                    conf_visible = false;
+                }, 3000);
+            }
+        }
+
+        function register() {
+            if (!conf_visible) {
+                confirm_password();
+            }
+
+            $.post("/auth/register/", {email: $("#email").val(), password: $("#password").val(), password_confirm: $("#password_confirm").val()},
+                    function(responseText)
+                    {
+                        var data = $.parseJSON(responseText);
+
+                        if (data.registered) {
+                            window.location.replace("/auth/welcome/");
+                        } else {
+                            if (data.error_message) {
+
+                                if (data.error_message == 'current_user') {
+                                    email.popover('show');
+                                    setTimeout(function() {
+                                        email.popover('hide');
+                                    }, 3000);
+                                }
+                            }
+                        }
+                    });
+        };
+
+        pass.keypress(function(e) {
+            if (e && e.which == 13) {
+                register();
+            }
+        })
 
         $("#submit").click(function() {
-            $.post("/auth/register/", {email: $("#email").val(), password: $("#password").val(), password_confirm: $("#password_confirm").val()},
-            function(responseText)
-            {
-                var data = $.parseJSON(responseText);
+            register();
+        });
 
-                if (data.registered) {
-                    window.location.replace("/auth/welcome/");
-                } else {
-                    if (data.error_message) {
-                        $("#error_message").html(data.error_message);
-                        $("#error_message").show();
-                    }
-                }
-
-            });
+        $("#password_confirm").blur(function() {
+            confirm_password();
         });
     });
-
 
     </script>
 

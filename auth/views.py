@@ -80,7 +80,7 @@ class Register(UserAwareView):
                     flask_login.login_user(new_user)
 
             if current_user:
-                message = "Whoops! An account has already been registered with that email."
+                message = "current_user"
 
         if form.errors:
             message = form.errors
