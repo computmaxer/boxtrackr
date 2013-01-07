@@ -13,10 +13,8 @@ def check_message_for_tracking_number(message):
     }
 
     for regex, type in _REGEX.items():
-        m = re.search(regex, message)
-        if m:
-            #TODO This only gets the first tracking number found.  We should look into possibly
-            #TODO checking for multiple numbers.
-            return m.group(0)
+        matches = re.findall(regex, message)
+        if matches:
+            return matches
 
     return None
